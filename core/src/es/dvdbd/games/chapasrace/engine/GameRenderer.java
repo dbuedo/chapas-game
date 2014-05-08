@@ -1,4 +1,4 @@
-package es.dvdbd.games.chapasrace.gameworld;
+package es.dvdbd.games.chapasrace.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import es.dvdbd.games.chapasrace.gameobjects.Cap;
 import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
@@ -21,6 +22,10 @@ public class GameRenderer {
 	public static boolean RENDER_TEXTURES = true;
 	public static boolean RENDER_DEBUG = false;
 
+
+	public float viewportWidth;
+	public float viewportHeight;
+	
 	// render
 	TextureRegion worldTexture, chapaTexture;
 	SpriteBatch batch;
@@ -42,21 +47,22 @@ public class GameRenderer {
 	public void init() {
 		batch = new SpriteBatch();
 		renderer = new Box2DDebugRenderer();
-		
+
 		//worldTexture = AssetsLoader.fondoPruebas;
 		worldTexture = AssetsLoader.circuito;
 		chapaTexture = AssetsLoader.chapa;
 		
 		camera = new OrthographicCamera();
 		screenRatio = ((float)Gdx.graphics.getWidth()) / ((float)Gdx.graphics.getHeight());
-		world.viewportWidth = GameConstants.VIEWPORT_HEIGHT*screenRatio;
-		cameraInit.set(world.viewportWidth/2, world.viewportHeight/2);
+		viewportWidth = GameConstants.VIEWPORT_HEIGHT*screenRatio;
+		viewportHeight = GameConstants.VIEWPORT_HEIGHT;  
+		cameraInit.set(viewportWidth/2, viewportHeight/2);
 		camera.translate(cameraInit);
 		System.out.println("ratio screen " + screenRatio);
-		System.out.println("ratio viewport " + world.viewportWidth / world.viewportHeight);
-		System.out.println("cam trans " + world.viewportWidth/2 + " " + world.viewportHeight/2);
+		System.out.println("ratio viewport " + viewportWidth / viewportHeight);
+		System.out.println("cam trans " + viewportWidth/2 + " " + viewportHeight/2);
 		
-		viewport = new ExtendViewport(world.viewportWidth, world.viewportHeight, camera);
+		viewport = new ExtendViewport(viewportWidth, viewportHeight, camera);
 	}
 	
 	public void render(float delta, float runTime) {
@@ -70,9 +76,8 @@ public class GameRenderer {
 		if(RENDER_TEXTURES) {
 			batch.begin();
 			batch.draw(worldTexture, 0, 0, world.worldWidth, world.worldHeight);
-			for(Body chapa : world.chapas) {
-				Sprite s = (Sprite) chapa.getUserData();
-				batch.draw(s.getTexture(), chapa.getPosition().x-GameConstants.CAP_RADIUS, chapa.getPosition().y-GameConstants.CAP_RADIUS, GameConstants.CAP_RADIUS*2, GameConstants.CAP_RADIUS*2);
+			for(Cap chapa : world.chapas) {
+				chapa.render(batch, delta, runTime);
 			}
 			batch.end();
 		}
