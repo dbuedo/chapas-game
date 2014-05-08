@@ -9,9 +9,12 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class WorldPhysicsInputController implements InputProcessor {
+import es.dvdbd.games.chapasrace.engine.GameWorld;
+import es.dvdbd.games.chapasrace.gameobjects.Cap;
 
-	World world;
+public class GameWorldInputController implements InputProcessor {
+
+	GameWorld gameWorld;
 	OrthographicCamera camera;
 	
 	Vector3 testPoint = new Vector3();
@@ -28,8 +31,8 @@ public class WorldPhysicsInputController implements InputProcessor {
 		}
 	};
 
-	public WorldPhysicsInputController(World world, OrthographicCamera camera) {
-		this.world = world;
+	public GameWorldInputController(GameWorld world, OrthographicCamera camera) {
+		this.gameWorld = world;
 		this.camera = camera;
 	}
 
@@ -55,7 +58,7 @@ public class WorldPhysicsInputController implements InputProcessor {
 		// ask the world which bodies are within the given
 		// bounding box around the mouse pointer
 		hitBody = null;
-		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f,
+		gameWorld.physics.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f,
 				testPoint.x + 0.0001f, testPoint.y + 0.0001f);
 		
 		if (hitBody != null) {
@@ -76,7 +79,7 @@ public class WorldPhysicsInputController implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (hitBody != null) {
-			System.out.println("touchUp la chapa!! ");
+			System.out.println("touchUp la chapa!! Moviendo chapa: " + ((Cap)hitBody.getUserData()).getId());
 			camera.unproject(targetPoint.set(screenX, screenY, 0));
 			System.out.println("targetPoint: " + targetPoint.x + ", " + targetPoint.y);
 			

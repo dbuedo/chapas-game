@@ -22,10 +22,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import es.dvdbd.games.chapasrace.gameworld.GameRenderer;
-import es.dvdbd.games.chapasrace.gameworld.GameWorld;
+import es.dvdbd.games.chapasrace.engine.GameRenderer;
+import es.dvdbd.games.chapasrace.engine.GameWorld;
+import es.dvdbd.games.chapasrace.engine.HUDStage;
 import es.dvdbd.games.chapasrace.inputcontrollers.CameraInputController;
-import es.dvdbd.games.chapasrace.inputcontrollers.WorldPhysicsInputController;
+import es.dvdbd.games.chapasrace.inputcontrollers.GameWorldInputController;
 import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
@@ -39,17 +40,18 @@ public class GameScreen implements Screen {
 	
 	CameraInputController camController;
 	GameWorld gameWorld;
-
+	HUDStage hud;
 
 	public GameScreen() {
 		gameWorld = new GameWorld();
 		renderer = new GameRenderer(gameWorld);
+		hud = new HUDStage();
 		
 		InputMultiplexer input = new InputMultiplexer();
 		
 		camController = new CameraInputController(gameWorld, renderer.getCamera());
 		GestureDetector gestureDetector = new GestureDetector(5, 0.5f, 2, 0.15f, camController);
-		WorldPhysicsInputController worldPhysicsController = new WorldPhysicsInputController(gameWorld.getPhysics(), renderer.getCamera());
+		GameWorldInputController worldPhysicsController = new GameWorldInputController(gameWorld, renderer.getCamera());
 				
 		
 		input.addProcessor(worldPhysicsController);
@@ -64,6 +66,7 @@ public class GameScreen implements Screen {
 		gameWorld.update(delta);
 		camController.update();
 		renderer.render(delta, runTime);
+		hud.render(delta);
 	}
 
 	@Override

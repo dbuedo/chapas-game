@@ -6,7 +6,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import es.dvdbd.games.chapasrace.gameworld.GameWorld;
+import es.dvdbd.games.chapasrace.engine.GameWorld;
 
 public class CameraInputController implements GestureListener {
 	float velX, velY;
@@ -108,16 +108,16 @@ public class CameraInputController implements GestureListener {
 	}
 	
 	private void setBoundedCamPosition(Vector3 newPos) {
-		if(newPos.y < ((world.viewportHeight*camera.zoom)/2)) {
-			newPos.y = ((world.viewportHeight*camera.zoom)/2);
-		} else if (newPos.y > (world.worldHeight - ((world.viewportHeight*camera.zoom)/2))) {
-			newPos.y =(world.worldHeight - ((world.viewportHeight*camera.zoom)/2));
+		if(newPos.y < ((camera.viewportHeight*camera.zoom)/2)) {
+			newPos.y = ((camera.viewportHeight*camera.zoom)/2);
+		} else if (newPos.y > (world.worldHeight - ((camera.viewportHeight*camera.zoom)/2))) {
+			newPos.y =(world.worldHeight - ((camera.viewportHeight*camera.zoom)/2));
 		}
 					
-		if(newPos.x < ((world.viewportWidth*camera.zoom)/2)) {
-			newPos.x = ((world.viewportWidth*camera.zoom)/2);
-		} else if(newPos.x > (world.worldWidth - ((world.viewportWidth*camera.zoom)/2))) {
-			newPos.x = (world.worldWidth - ((world.viewportWidth*camera.zoom)/2));
+		if(newPos.x < ((camera.viewportWidth*camera.zoom)/2)) {
+			newPos.x = ((camera.viewportWidth*camera.zoom)/2);
+		} else if(newPos.x > (world.worldWidth - ((camera.viewportWidth*camera.zoom)/2))) {
+			newPos.x = (world.worldWidth - ((camera.viewportWidth*camera.zoom)/2));
 		}
 		camera.position.set(newPos);
 	}
