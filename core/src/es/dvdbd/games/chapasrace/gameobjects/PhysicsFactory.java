@@ -6,9 +6,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
+import es.dvdbd.games.chapasrace.util.Collisions;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
 public class PhysicsFactory {
@@ -68,5 +70,30 @@ public class PhysicsFactory {
 		circleShape.dispose();
 		
 		return cap;
+	}
+
+	public Body createTarget(float positionX, float positionY) {
+		Body target;
+
+		BodyDef circleBodyDef = new BodyDef();
+		circleBodyDef.type = BodyType.StaticBody;
+		circleBodyDef.position.x = positionX;
+		circleBodyDef.position.y = positionY;
+		
+		target = physics.createBody(circleBodyDef);
+		
+		CircleShape circleShape = new CircleShape();		
+		circleShape.setRadius(GameConstants.TARGET_SENSOR_RADIUS);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = circleShape;
+		fd.density = 0.0f;
+		fd.isSensor = true;
+		
+		target.createFixture(fd);
+	
+		circleShape.dispose();
+		
+		return target;		
 	}
 }

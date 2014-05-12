@@ -9,11 +9,25 @@ public class GameWorldFactory {
 	public GameWorldFactory(PhysicsFactory physics) {
 		this.physics = physics;
 	}
-
-	public Cap createCap(String capId, float positionX, float positionY) {
+	
+	public Player createPlayer(String name, Cap cap) {
+		Player player = new Player();
+		player.name = name;
+		player.cap = cap;
+		return player;
+	}
+	
+	public Cap createCap(String capId, float positionX, float positionY, Cap.Color color) {
 		Body body = physics.createCap(positionX, positionY);
-		Cap chapa = new Cap(capId, body);
+		Cap chapa = new Cap(capId, body, color);
 		body.setUserData(chapa);
 		return chapa;
+	}
+	
+	public Target createTarget(float positionX, float positionY) {
+		Body body = physics.createTarget(positionX, positionY);
+		Target tgt = new Target(body);
+		body.setUserData(tgt);
+		return tgt;
 	}
 }

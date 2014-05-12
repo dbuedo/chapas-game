@@ -1,4 +1,4 @@
-package es.dvdbd.games.chapasrace.inputcontrollers;
+package es.dvdbd.games.chapasrace.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;

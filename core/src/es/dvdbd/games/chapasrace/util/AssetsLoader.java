@@ -13,15 +13,33 @@ import es.dvdbd.games.chapasrace.ChapasRaceGame;
 
 public class AssetsLoader {
 
-    public static Texture chapaTexture, circuitoTexture, fondoPruebasTexture;
-    public static TextureRegion chapa, circuito, fondoPruebas;    
+    public static Texture chapaTexture, chapaNaranjaTexture, chapaAmarillaTexture, chapaRojaTexture, chapaAzulTexture;
+    public static Texture circuitoTexture, fondoPruebasTexture, verticalTexture;
+    public static TextureRegion chapa, chapaNaranja, chapaAmarilla, chapaRoja, chapaAzul;
+    public static TextureRegion circuito, fondoPruebas, vertical;    
     public static Preferences prefs;
     
     public static void load() {
     	    	
     	chapaTexture = new Texture(Gdx.files.internal("textures/chapa.png"));
-        chapaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    	chapaNaranjaTexture = new Texture(Gdx.files.internal("textures/chapa-naranja.png"));
+    	chapaAmarillaTexture = new Texture(Gdx.files.internal("textures/chapa-amarilla.png"));
+    	chapaRojaTexture = new Texture(Gdx.files.internal("textures/chapa-roja.png"));
+    	chapaAzulTexture = new Texture(Gdx.files.internal("textures/chapa-azul.png"));
+    	    	
+    	chapaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    	chapaNaranjaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    	chapaAmarillaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    	chapaRojaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    	chapaAzulTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    	
+    	
         chapa = new TextureRegion(chapaTexture);
+        chapaNaranja = new TextureRegion(chapaNaranjaTexture);
+        chapaAmarilla = new TextureRegion(chapaAmarillaTexture);
+        chapaRoja = new TextureRegion(chapaRojaTexture);
+        chapaAzul = new TextureRegion(chapaAzulTexture);
+        chapaAzul.flip(true, true);
         
         circuitoTexture = new Texture(Gdx.files.internal("textures/circuito.jpg"));
         circuitoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -30,6 +48,10 @@ public class AssetsLoader {
         fondoPruebasTexture = new Texture(Gdx.files.internal("textures/fondo-pruebas.png"));
         fondoPruebasTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         fondoPruebas = new TextureRegion(fondoPruebasTexture);
+        
+        verticalTexture = new Texture(Gdx.files.internal("textures/vertical.png"));
+        verticalTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        vertical = new TextureRegion(verticalTexture);
         
                 
         prefs = Gdx.app.getPreferences(ChapasRaceGame.class.getSimpleName());

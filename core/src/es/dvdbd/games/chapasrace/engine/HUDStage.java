@@ -19,10 +19,14 @@ public class HUDStage {
 	
 	private Skin skin;
 	private	Stage stage;
+	private GameWorld world;
 	
 	private Label fps;
+	private Label turn, winner;
+	private Label score;
 	
-	public HUDStage() {
+	public HUDStage(GameWorld world) {
+		this.world = world;
 		stage = new Stage();
 		skin = new Skin();
 		
@@ -54,9 +58,22 @@ public class HUDStage {
 		table.setFillParent(true);
 		stage.addActor(table);
 		
+		Table table2 = new Table();
+		table2.setFillParent(true);
+		table.addActor(table2);
+		
 		fps = new Label("fps: 60 ", skin);
-		table.addActor(fps);
+		table2.stack(fps);
 
+		turn = new Label(" | Turno de: Amarillo ", skin);
+		table2.stack(turn);
+		
+		score = new Label(" | Toques: 9999 ", skin);
+		table2.stack(score);
+		
+		winner = new Label("", skin);
+		table2.stack(winner);
+		
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
 		//final TextButton button = new TextButton("Click me!", skin);
 		//table.add(button);
@@ -66,7 +83,16 @@ public class HUDStage {
 	}
 	
 	public void render(float delta){
-		fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
+		if(world.gameWinned) {
+			fps.setText("");
+			turn.setText("");
+			score.setText("");
+			winner.setText(" ¡¡¡ " + world.winner.name + " GANA LA PARTIDA !!! ");
+		} else {
+			fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
+			turn.setText(" | Turno de: " + world.turn.name);
+			score.setText(" | Toques: " + world.turn.score);	
+		}
 		stage.act(Math.min(delta, 1 / 30f));
 		stage.draw();
 		Table.drawDebug(stage);

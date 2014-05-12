@@ -1,4 +1,4 @@
-package es.dvdbd.games.chapasrace.inputcontrollers;
+package es.dvdbd.games.chapasrace.controllers;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,6 +14,8 @@ import es.dvdbd.games.chapasrace.gameobjects.Cap;
 
 public class GameWorldInputController implements InputProcessor {
 
+	boolean proccessTouchEvents = false;
+	
 	GameWorld gameWorld;
 	OrthographicCamera camera;
 	
@@ -53,6 +55,7 @@ public class GameWorldInputController implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		proccessTouchEvents = false;
 		camera.unproject(testPoint.set(screenX, screenY, 0));
 		System.out.println("ChapasControl testPoint: " + testPoint.x + ", " + testPoint.y);
 		// ask the world which bodies are within the given
@@ -62,6 +65,7 @@ public class GameWorldInputController implements InputProcessor {
 				testPoint.x + 0.0001f, testPoint.y + 0.0001f);
 		
 		if (hitBody != null) {
+			proccessTouchEvents = true;
 			/*		MouseJointDef def = new MouseJointDef();
 					def.bodyA = groundBody;
 					def.bodyB = hitBody;
@@ -71,14 +75,19 @@ public class GameWorldInputController implements InputProcessor {
 					mouseJoint = (MouseJoint) world.createJoint(def);
 					hitBody.setAwake(true); */
 					System.out.println("touchDown la chapa!! ");
-					return true;
+					if(gameWorld.turnIsPlaying ||  !hitBody.equals(gameWorld.turn.cap.getBody())) {
+						System.out.println("No es tu turno!!");
+						hitBody = null;
+					}
 		}
-		return false;
+		return proccessTouchEvents;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (hitBody != null) {
+			gameWorld.turnIsPlaying = true;
+			gameWorld.turn.score++;
 			System.out.println("touchUp la chapa!! Moviendo chapa: " + ((Cap)hitBody.getUserData()).getId());
 			camera.unproject(targetPoint.set(screenX, screenY, 0));
 			System.out.println("targetPoint: " + targetPoint.x + ", " + targetPoint.y);
@@ -96,19 +105,16 @@ public class GameWorldInputController implements InputProcessor {
 			System.out.println("applying force: " + forceVector.x + ", " + forceVector.y);
 			hitBody.applyForceToCenter(forceVector, true);
 			hitBody = null;
-
-			return true;
 		}
-		return false;
+		return proccessTouchEvents;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if (hitBody != null) {
 			System.out.println("touchDragged la chapa!! ");
-			return true;
 		}
-		return false;
+		return proccessTouchEvents;
 	}
 
 	@Override

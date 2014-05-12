@@ -20,14 +20,14 @@ public class GameRenderer {
 	
 	
 	public static boolean RENDER_TEXTURES = true;
-	public static boolean RENDER_DEBUG = false;
+	public static boolean RENDER_DEBUG = true;
 
 
 	public float viewportWidth;
 	public float viewportHeight;
 	
 	// render
-	TextureRegion worldTexture, chapaTexture;
+	TextureRegion worldTexture;
 	SpriteBatch batch;
 	Box2DDebugRenderer renderer;
 	
@@ -48,9 +48,7 @@ public class GameRenderer {
 		batch = new SpriteBatch();
 		renderer = new Box2DDebugRenderer();
 
-		//worldTexture = AssetsLoader.fondoPruebas;
-		worldTexture = AssetsLoader.circuito;
-		chapaTexture = AssetsLoader.chapa;
+		worldTexture = world.board.texture;
 		
 		camera = new OrthographicCamera();
 		screenRatio = ((float)Gdx.graphics.getWidth()) / ((float)Gdx.graphics.getHeight());
@@ -76,9 +74,10 @@ public class GameRenderer {
 		if(RENDER_TEXTURES) {
 			batch.begin();
 			batch.draw(worldTexture, 0, 0, world.worldWidth, world.worldHeight);
+			world.target.render(batch, delta, runTime);
 			for(Cap chapa : world.chapas) {
 				chapa.render(batch, delta, runTime);
-			}
+			}			
 			batch.end();
 		}
 		
