@@ -5,23 +5,13 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.input.GestureDetector;
 
-<<<<<<< HEAD
-import es.dvdbd.games.chapasrace.boards.GameBoard;
 import es.dvdbd.games.chapasrace.boards.VerticalDefaultBoard;
 import es.dvdbd.games.chapasrace.controllers.CameraInputController;
 import es.dvdbd.games.chapasrace.controllers.GameWorldInputController;
 import es.dvdbd.games.chapasrace.engine.GameRenderer;
 import es.dvdbd.games.chapasrace.engine.GameWorld;
 import es.dvdbd.games.chapasrace.engine.HUDStage;
-=======
-import es.dvdbd.games.chapasrace.engine.GameRenderer;
-import es.dvdbd.games.chapasrace.engine.GameWorld;
-import es.dvdbd.games.chapasrace.engine.HUDStage;
-import es.dvdbd.games.chapasrace.inputcontrollers.CameraInputController;
-import es.dvdbd.games.chapasrace.inputcontrollers.GameWorldInputController;
-import es.dvdbd.games.chapasrace.util.AssetsLoader;
-import es.dvdbd.games.chapasrace.util.GameConstants;
->>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434
+
 
 
 public class GameScreen implements Screen {
@@ -38,11 +28,8 @@ public class GameScreen implements Screen {
 	public GameScreen() {
 		gameWorld = new GameWorld(new VerticalDefaultBoard());
 		renderer = new GameRenderer(gameWorld);
-<<<<<<< HEAD
 		hud = new HUDStage(gameWorld);
-=======
-		hud = new HUDStage();
->>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434
+
 		
 		InputMultiplexer input = new InputMultiplexer();
 		

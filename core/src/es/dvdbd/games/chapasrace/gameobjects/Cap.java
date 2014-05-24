@@ -2,10 +2,7 @@ package es.dvdbd.games.chapasrace.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-<<<<<<< HEAD
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-=======
->>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,7 +11,7 @@ import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
 public class Cap extends GameObject {
-<<<<<<< HEAD
+
 	
 	public enum Color { BLANCA, NARANJA, AMARILLA, ROJA, AZUL};
 	
@@ -34,16 +31,6 @@ public class Cap extends GameObject {
 			default: texture = AssetsLoader.chapa; break;
 		}
 		this.sprite = new Sprite(texture);
-=======
-
-	private String id;
-	private Sprite sprite;
-	
-	public Cap(String capId, Body physicalBody) {
-		super(physicalBody);
-		this.id = capId;
-		this.sprite = new Sprite(AssetsLoader.chapa);
->>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434
 	}
 
 	@Override
@@ -67,11 +54,9 @@ public class Cap extends GameObject {
 				this.body.setLinearVelocity(vel);
 				this.body.setAngularVelocity(0);
 			} else {
-<<<<<<< HEAD
+
 	//			System.out.println("updating chapa " + id);
-=======
-				System.out.println("updating chapa " + id);
->>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434
+
 				Vector2 velFrictioned = vel.scl(-1 * friction);
 				this.body.applyForceToCenter(velFrictioned, true);
 			}
