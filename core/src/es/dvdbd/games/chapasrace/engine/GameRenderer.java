@@ -48,7 +48,13 @@ public class GameRenderer {
 		batch = new SpriteBatch();
 		renderer = new Box2DDebugRenderer();
 
+<<<<<<< HEAD:core/src/es/dvdbd/games/chapasrace/engine/GameRenderer.java
 		worldTexture = world.board.texture;
+=======
+		//worldTexture = AssetsLoader.fondoPruebas;
+		worldTexture = AssetsLoader.circuito;
+		chapaTexture = AssetsLoader.chapa;
+>>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434:core/src/es/dvdbd/games/chapasrace/engine/GameRenderer.java
 		
 		camera = new OrthographicCamera();
 		screenRatio = ((float)Gdx.graphics.getWidth()) / ((float)Gdx.graphics.getHeight());
@@ -74,10 +80,16 @@ public class GameRenderer {
 		if(RENDER_TEXTURES) {
 			batch.begin();
 			batch.draw(worldTexture, 0, 0, world.worldWidth, world.worldHeight);
+<<<<<<< HEAD:core/src/es/dvdbd/games/chapasrace/engine/GameRenderer.java
 			world.target.render(batch, delta, runTime);
 			for(Cap chapa : world.chapas) {
 				chapa.render(batch, delta, runTime);
 			}			
+=======
+			for(Cap chapa : world.chapas) {
+				chapa.render(batch, delta, runTime);
+			}
+>>>>>>> b01e9473b8e655faa40463039e5c7ee5b56a7434:core/src/es/dvdbd/games/chapasrace/engine/GameRenderer.java
 			batch.end();
 		}
 		
