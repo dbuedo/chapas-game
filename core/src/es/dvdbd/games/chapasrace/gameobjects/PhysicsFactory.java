@@ -15,7 +15,7 @@ import es.dvdbd.games.chapasrace.util.GameConstants;
 
 public class PhysicsFactory {
 
-	private World physics;
+	public World physics;
 
 	public PhysicsFactory(World physics) {
 		this.physics = physics;

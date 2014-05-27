@@ -4,10 +4,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class GameWorldFactory {
 	
-	PhysicsFactory physics;
+	public PhysicsFactory physicsFactory;
 	
 	public GameWorldFactory(PhysicsFactory physics) {
-		this.physics = physics;
+		this.physicsFactory = physics;
 	}
 	
 	public Player createPlayer(String name, Cap cap) {
@@ -18,14 +18,14 @@ public class GameWorldFactory {
 	}
 	
 	public Cap createCap(String capId, float positionX, float positionY, Cap.Color color) {
-		Body body = physics.createCap(positionX, positionY);
+		Body body = physicsFactory.createCap(positionX, positionY);
 		Cap chapa = new Cap(capId, body, color);
 		body.setUserData(chapa);
 		return chapa;
 	}
 	
 	public Target createTarget(float positionX, float positionY) {
-		Body body = physics.createTarget(positionX, positionY);
+		Body body = physicsFactory.createTarget(positionX, positionY);
 		Target tgt = new Target(body);
 		body.setUserData(tgt);
 		return tgt;

@@ -4,7 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+import es.dvdbd.games.chapasrace.boards.LevelOne;
 import es.dvdbd.games.chapasrace.boards.VerticalDefaultBoard;
 import es.dvdbd.games.chapasrace.controllers.CameraInputController;
 import es.dvdbd.games.chapasrace.controllers.GameWorldInputController;
@@ -26,7 +30,7 @@ public class GameScreen implements Screen {
 	HUDStage hud;
 
 	public GameScreen() {
-		gameWorld = new GameWorld(new VerticalDefaultBoard());
+		gameWorld = new GameWorld(new LevelOne());
 		renderer = new GameRenderer(gameWorld);
 		hud = new HUDStage(gameWorld);
 
@@ -37,7 +41,7 @@ public class GameScreen implements Screen {
 		GestureDetector gestureDetector = new GestureDetector(5, 0.5f, 2, 0.15f, camController);
 		GameWorldInputController worldPhysicsController = new GameWorldInputController(gameWorld, renderer.getCamera());
 				
-		
+		input.addProcessor(hud.getStage());
 		input.addProcessor(worldPhysicsController);
 		input.addProcessor(gestureDetector);
 		Gdx.input.setInputProcessor(input);

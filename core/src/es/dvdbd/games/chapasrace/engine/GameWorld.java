@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.dvdbd.games.chapasrace.boards.GameBoard;
+import es.dvdbd.games.chapasrace.boards.GameLevel;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
 import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
 import es.dvdbd.games.chapasrace.gameobjects.PhysicsFactory;
@@ -24,8 +24,9 @@ public class GameWorld {
 	public float worldWidth;
 	public float worldHeight;
 
-	public GameBoard board;
-
+	public GameLevel level;
+	public GameWorldFactory factory;
+	
 	public World physics;
 	public List<Cap> chapas;
 	public Target target;
@@ -36,14 +37,19 @@ public class GameWorld {
 
 	public boolean gamePaused = false;
 	public boolean gameWinned = false;
+	public boolean gameRestart = false;
 	public boolean turnIsPlaying = false;
 
-	public GameWorld(GameBoard board) {
-		this.board = board;
-		worldWidth = board.boardWidth;
-		worldHeight = board.boardHeight;
+	public GameWorld(GameLevel level) {
+		this.level = level;
+		
+		physics = new World(new Vector2(0, 0), true);		
 
-		physics = new World(new Vector2(0, 0), true);
+		PhysicsFactory physicsFactory = new PhysicsFactory(physics);
+		factory = new GameWorldFactory(physicsFactory);
+		this.level.init(factory);
+		loadLevel();
+				
 		physics.setContactListener(new ContactListener() {
 
 			@Override
@@ -80,24 +86,18 @@ public class GameWorld {
 			}
 		});
 
-		PhysicsFactory physicsFactory = new PhysicsFactory(physics);
-		physicsFactory.createWorldLimits(worldWidth, worldHeight);
+		
+	}
 
-		GameWorldFactory factory = new GameWorldFactory(physicsFactory);
-
-		chapas = new ArrayList<Cap>();
-
-		Cap chapa = factory.createCap("chapa-amarilla", 6, 10,
-				Cap.Color.AMARILLA);
-		player1 = factory.createPlayer("Amarillo", chapa);
-		chapas.add(chapa);
+	private void loadLevel() {
+		chapas = this.level.getChapas();
+		target = this.level.getTarget();
+		player1 = factory.createPlayer("Amarillo", chapas.get(0));
+		player2 = factory.createPlayer("Rojo", chapas.get(1));
 		turn = player1;
-
-		chapa = factory.createCap("chapa-roja", 18, 10, Cap.Color.ROJA);
-		player2 = factory.createPlayer("Rojo", chapa);
-		chapas.add(chapa);
-
-		target = factory.createTarget(12, 150);
+		
+		worldWidth = this.level.getBoard().boardWidth;
+		worldHeight = this.level.getBoard().boardHeight;
 	}
 
 	public void update(float delta) {
@@ -105,7 +105,9 @@ public class GameWorld {
 			chapa.update(delta);
 		}
 		physics.step(gamePaused?0:delta, 3, 3);
-		if (turnIsPlaying && !hasMovingBodies()) {
+		if(gameRestart) {
+			restartWorld();
+		} else if (turnIsPlaying && !hasMovingBodies()) {
 			turnIsPlaying = false;
 			System.out.println("Todo quieto!");
 			nextTurn();
@@ -147,4 +149,17 @@ public class GameWorld {
 		System.out.println("########################################");
 	}
 
+	public void restart() {
+		gameRestart = true;
+	}
+	
+	private void restartWorld() {
+		turnIsPlaying = false;
+		winner = null;
+		gameWinned = false;
+		this.level.restart();
+		loadLevel();	
+		gamePaused = false;
+		gameRestart = false;
+	}
 }

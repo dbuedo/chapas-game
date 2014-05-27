@@ -1,17 +1,13 @@
 package es.dvdbd.games.chapasrace.engine;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 
 
@@ -21,65 +17,66 @@ public class HUDStage {
 	private	Stage stage;
 	private GameWorld world;
 	
-	private Label fps;
-	private Label turn, winner;
-	private Label score;
+	private Label fps, turn, winner, score;
 	
-	public HUDStage(GameWorld world) {
-		this.world = world;
+	private Table tableTopLeft, tableTopRight;
+	private Table tableCenter;
+	private Table tableBottomLeft, tableBottomRight;
+	
+	private TextButton resetButton;
+		
+	public HUDStage(GameWorld gameWorld) {
+		this.world = gameWorld;
 		stage = new Stage();
-		skin = new Skin();
-		
-		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
-		skin.add("white", new Texture(pixmap));
+		skin = new Skin((Gdx.files.internal("ui/uiskin.json")));
 
-		// Store the default libgdx font under the name "default".
-		skin.add("default", new BitmapFont());
-
-		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("default", textButtonStyle);
-		
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.background = skin.newDrawable("white", Color.BLACK);
-		labelStyle.font = skin.getFont("default");
-		labelStyle.fontColor = Color.WHITE;
-		skin.add("default", labelStyle);
-		
-		// Create a table that fills the screen. Everything else will go inside this table.
-		Table table = new Table();
+		Table table = new Table();//.debug();
 		table.setFillParent(true);
 		stage.addActor(table);
 		
-		Table table2 = new Table();
-		table2.setFillParent(true);
-		table.addActor(table2);
+		tableTopLeft = new Table();
+		table.add(tableTopLeft).pad(10).expand().top().left();
+
+		tableTopRight = new Table();
+		table.add(tableTopRight).pad(10).expand().top().right();
+	
+		table.row();
+		
+		tableCenter = new Table();
+		table.add(tableCenter).pad(10).colspan(2).expand().center();
+		
+		table.row();
+		
+		tableBottomLeft = new Table();
+		table.add(tableBottomLeft).pad(10).expand().bottom().left();
+		
+		tableBottomRight = new Table();
+		table.add(tableBottomRight).pad(10).expand().bottom().right();
+		
+
+		turn = new Label("Turno de: Amarillo ", skin);
+		tableTopLeft.add(turn);
+		
+	
+		score = new Label("Toques: 9999 ", skin);
+		tableTopRight.add(score);
+					
 		
 		fps = new Label("fps: 60 ", skin);
-		table2.stack(fps);
+		tableBottomLeft.add(fps);
 
-		turn = new Label(" | Turno de: Amarillo ", skin);
-		table2.stack(turn);
-		
-		score = new Label(" | Toques: 9999 ", skin);
-		table2.stack(score);
-		
 		winner = new Label("", skin);
-		table2.stack(winner);
 		
-		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
-		//final TextButton button = new TextButton("Click me!", skin);
-		//table.add(button);
-
-		// Add an image actor. Have to set the size, else it would be the size of the drawable (which is the 1x1 texture).
-		//table.add(new Image(skin.newDrawable("white", Color.RED))).size(64);
+		
+		resetButton = new TextButton("Reiniciar", skin);
+		resetButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("Reset button");
+				reset();
+			}
+		});
+		
 	}
 	
 	public void render(float delta){
@@ -88,13 +85,28 @@ public class HUDStage {
 			turn.setText("");
 			score.setText("");
 			winner.setText(" ¡¡¡ " + world.winner.name + " GANA LA PARTIDA !!! ");
+			tableCenter.add(winner);
+			tableCenter.row();
+			tableCenter.add(resetButton);
 		} else {
 			fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
-			turn.setText(" | Turno de: " + world.turn.name);
-			score.setText(" | Toques: " + world.turn.score);	
+			turn.setText("Turno de: " + world.turn.name);
+			score.setText("Toques: " + world.turn.score);	
 		}
 		stage.act(Math.min(delta, 1 / 30f));
 		stage.draw();
-		Table.drawDebug(stage);
+		//Table.drawDebug(stage);
+	}
+	
+	public void reset() {
+		world.restart();
+		fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
+		turn.setText("Turno de: " + world.turn.name);
+		score.setText("Toques: " + world.turn.score);	
+		tableCenter.clearChildren();	
+	}
+	
+	public Stage getStage() {
+		return stage;
 	}
 }

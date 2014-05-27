@@ -17,7 +17,7 @@ public class GameRenderer {
 	
 	
 	public static boolean RENDER_TEXTURES = true;
-	public static boolean RENDER_DEBUG = true;
+	public static boolean RENDER_DEBUG = false;
 
 
 	public float viewportWidth;
@@ -45,7 +45,7 @@ public class GameRenderer {
 		batch = new SpriteBatch();
 		renderer = new Box2DDebugRenderer();
 
-		worldTexture = world.board.texture;
+		worldTexture = world.level.getBoard().texture;
 	
 		camera = new OrthographicCamera();
 		screenRatio = ((float)Gdx.graphics.getWidth()) / ((float)Gdx.graphics.getHeight());
@@ -94,4 +94,5 @@ public class GameRenderer {
 	public OrthographicCamera getCamera() {
 		return camera;
 	}
+
 }
