@@ -1,30 +1,27 @@
-package es.dvdbd.games.chapasrace.boards;
+package es.dvdbd.games.chapasrace.levels;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
+import es.dvdbd.games.chapasrace.boards.VerticalDefaultBoard;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
-import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
 import es.dvdbd.games.chapasrace.util.PhysicsHelper;
 
 public class LevelOne extends GameLevel {
 
-	
+		
 	@Override
-	public void init(GameWorldFactory factory) {
-		this.factory = factory;
-		this.physics = factory.physicsFactory.physics;
-		initStatics();
-		initDynamics();
-	}
-	
-	private void initStatics() {
+	protected void initStatics() {
 		System.out.println("Init statics...");
 		this.board = new VerticalDefaultBoard();
 		factory.physicsFactory.createWorldLimits(board.boardWidth, board.boardHeight);
 	}
 	
-	private void initDynamics() {
+	@Override
+	protected void initDynamics() {
 		System.out.println("Init dynamics...");
+		startPosition = new Vector2(12,10);
 		chapas = new ArrayList<Cap>();
 
 		Cap chapa = factory.createCap("chapa-amarilla", 6, 10, Cap.Color.AMARILLA);
@@ -37,28 +34,18 @@ public class LevelOne extends GameLevel {
 	}
 
 	@Override
-	public void destroy() {
-		destroyDynamics();
-		destroyStatics();				
-	}
-
-	private void destroyStatics() {
+	protected void destroyStatics() {
 		System.out.println("Destroying statics...");		
 	}
 
-	private void destroyDynamics() {
+	@Override
+	protected void destroyDynamics() {
 		System.out.println("Destroying dynamics...");
 		for(Cap chapa : chapas) {
 			PhysicsHelper.removeBodySafely(physics, chapa.getBody());
 		}
 		PhysicsHelper.removeBodySafely(physics, target.getBody());
 		target = null;
-	}
-
-	@Override
-	public void restart() {
-		destroyDynamics();
-		initDynamics();
 	}
 	
 }

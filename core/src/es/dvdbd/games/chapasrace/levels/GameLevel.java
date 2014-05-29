@@ -1,9 +1,12 @@
-package es.dvdbd.games.chapasrace.boards;
+package es.dvdbd.games.chapasrace.levels;
 
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 
+import es.dvdbd.games.chapasrace.boards.GameBoard;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
 import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
@@ -14,6 +17,7 @@ public abstract class GameLevel {
 	protected World physics;
 	protected List<Cap> chapas;
 	protected Target target;
+	protected Vector2 startPosition;
 
 	protected GameWorldFactory factory;
 
@@ -42,11 +46,30 @@ public abstract class GameLevel {
 		return target;
 	}
 	
-	public abstract void init(GameWorldFactory factory);
+	public Vector2 getStartPosition() {
+		return startPosition.cpy();
+	}
 	
-	public abstract void restart();
+	public void init(GameWorldFactory factory) {
+		this.factory = factory;
+		this.physics = factory.physicsFactory.physics;
+		initStatics();
+		initDynamics();
+	}
 	
-	public abstract void destroy();
+	public void restart() {
+		destroyDynamics();
+		initDynamics();
+	}
+	
+	public void destroy() {
+		destroyDynamics();
+		destroyStatics();				
+	}
 
-
+	protected abstract void initStatics();
+	protected abstract void initDynamics();
+	protected abstract void destroyStatics();
+	protected abstract void destroyDynamics();
+	
 }

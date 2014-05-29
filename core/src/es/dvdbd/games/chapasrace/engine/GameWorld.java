@@ -1,10 +1,11 @@
 package es.dvdbd.games.chapasrace.engine;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -12,12 +13,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.dvdbd.games.chapasrace.boards.GameLevel;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
 import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
 import es.dvdbd.games.chapasrace.gameobjects.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Player;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
+import es.dvdbd.games.chapasrace.levels.GameLevel;
+import es.dvdbd.games.chapasrace.levels.LevelOne;
+import es.dvdbd.games.chapasrace.levels.LevelTwo;
 
 public class GameWorld {
 
@@ -40,6 +43,8 @@ public class GameWorld {
 	public boolean gameRestart = false;
 	public boolean turnIsPlaying = false;
 
+	public Vector2 camPosition;
+	
 	public GameWorld(GameLevel level) {
 		this.level = level;
 		
@@ -95,7 +100,7 @@ public class GameWorld {
 		player1 = factory.createPlayer("Amarillo", chapas.get(0));
 		player2 = factory.createPlayer("Rojo", chapas.get(1));
 		turn = player1;
-		
+		camPosition = level.getStartPosition();
 		worldWidth = this.level.getBoard().boardWidth;
 		worldHeight = this.level.getBoard().boardHeight;
 	}
@@ -107,10 +112,13 @@ public class GameWorld {
 		physics.step(gamePaused?0:delta, 3, 3);
 		if(gameRestart) {
 			restartWorld();
-		} else if (turnIsPlaying && !hasMovingBodies()) {
-			turnIsPlaying = false;
-			System.out.println("Todo quieto!");
-			nextTurn();
+		} else if (turnIsPlaying) {
+			if(!hasMovingBodies()) {
+				turnIsPlaying = false;
+				System.out.println("Todo quieto!");
+				nextTurn();	
+			}
+			camPosition = turn.cap.getPosition().cpy();
 		}
 	}
 
@@ -157,9 +165,20 @@ public class GameWorld {
 		turnIsPlaying = false;
 		winner = null;
 		gameWinned = false;
-		this.level.restart();
+		restartLevel();
 		loadLevel();	
 		gamePaused = false;
 		gameRestart = false;
+	}
+	
+	private void restartLevel() {
+		this.level.restart();
+		/*level.destroy();
+		if(level instanceof LevelOne) {
+			level = new LevelTwo();
+		} else {
+			level = new LevelOne();
+		}
+		level.init(factory);*/
 	}
 }

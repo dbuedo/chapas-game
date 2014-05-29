@@ -13,7 +13,7 @@ public class Target extends GameObject {
 	
 	public Target(Body physicalBody) {
 		super(physicalBody);
-		texture = AssetsLoader.chapaAzul;
+		texture = AssetsLoader.targetRojo;
 	}
 
 	@Override

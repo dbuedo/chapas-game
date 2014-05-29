@@ -18,6 +18,7 @@ public class Cap extends GameObject {
 	private String id;
 	private Sprite sprite;
 	
+	
 	public Cap(String capId, Body physicalBody, Color color) {
 		super(physicalBody);
 		this.id = capId;
@@ -31,6 +32,8 @@ public class Cap extends GameObject {
 			default: texture = AssetsLoader.chapa; break;
 		}
 		this.sprite = new Sprite(texture);
+		sprite.setSize(GameConstants.CAP_RADIUS*2, GameConstants.CAP_RADIUS*2);
+		sprite.setOriginCenter();
 	}
 
 	@Override
@@ -40,12 +43,22 @@ public class Cap extends GameObject {
 
 	@Override
 	public void render(SpriteBatch batch, float delta, float runTime) {
-		batch.draw(sprite.getTexture(), body.getPosition().x-GameConstants.CAP_RADIUS, body.getPosition().y-GameConstants.CAP_RADIUS, GameConstants.CAP_RADIUS*2, GameConstants.CAP_RADIUS*2);
-	}
+/*		batch.draw(
+				sprite.getTexture(),                                 
+				body.getPosition().x-GameConstants.CAP_RADIUS,           
+				body.getPosition().y-GameConstants.CAP_RADIUS,             
+				GameConstants.CAP_RADIUS*2,                       // width,      
+				GameConstants.CAP_RADIUS*2                       // height,        
+				);
+	*/	
 
-	private void updateFriction() {
-		float friction = 10f;
-		Vector2 vel = this.body.getLinearVelocity();
+		sprite.translate(-GameConstants.CAP_RADIUS, -GameConstants.CAP_RADIUS);
+		sprite.draw(batch);
+	}                                                                      
+                                                                           
+	private void updateFriction() {                                     
+		float friction = 10f;                                           
+		Vector2 vel = body.getLinearVelocity();
 		if(vel.x != 0 || vel.y != 0) {			
 			if(Math.abs(vel.x) < 0.5f && Math.abs(vel.y) < 0.5f){
 				System.out.println("stoping chapa " + id);
@@ -54,9 +67,6 @@ public class Cap extends GameObject {
 				this.body.setLinearVelocity(vel);
 				this.body.setAngularVelocity(0);
 			} else {
-
-	//			System.out.println("updating chapa " + id);
-
 				Vector2 velFrictioned = vel.scl(-1 * friction);
 				this.body.applyForceToCenter(velFrictioned, true);
 			}
@@ -64,13 +74,13 @@ public class Cap extends GameObject {
 			this.body.setAngularVelocity(0);
 		}
 		
-		float angularVelocity = this.body.getAngularVelocity();
+		float angularVelocity = body.getAngularVelocity();
 		if(angularVelocity!=0) {
-			this.body.setAngularVelocity(angularVelocity*0.1f);
+			body.setAngularVelocity(angularVelocity*0.1f);
 		}
 		
-		this.sprite.setPosition(this.body.getPosition().x, this.body.getPosition().y);
-		this.sprite.setRotation(MathUtils.radiansToDegrees * this.body.getAngle());
+		sprite.setPosition(body.getPosition().x, body.getPosition().y);
+		sprite.setRotation(MathUtils.radiansToDegrees * body.getAngle());
 		
 		/*
 		System.out.println("chapa " + id + " angular damping  : "+ chapa.getAngularDamping());
@@ -87,6 +97,6 @@ public class Cap extends GameObject {
 	}
 
 	public Vector2 getPosition() {
-		return this.body.getPosition();
+		return body.getPosition();
 	}
 }

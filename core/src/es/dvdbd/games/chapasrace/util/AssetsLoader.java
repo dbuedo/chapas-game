@@ -14,13 +14,15 @@ import es.dvdbd.games.chapasrace.ChapasRaceGame;
 public class AssetsLoader {
 
     public static Texture chapaTexture, chapaNaranjaTexture, chapaAmarillaTexture, chapaRojaTexture, chapaAzulTexture;
+    public static Texture targetRojoTexture, targetAzulTexture, targetGrisTexture;
     public static Texture circuitoTexture, fondoPruebasTexture, verticalTexture;
     public static TextureRegion chapa, chapaNaranja, chapaAmarilla, chapaRoja, chapaAzul;
+    public static TextureRegion targetRojo, targetAzul, targetGris;
     public static TextureRegion circuito, fondoPruebas, vertical;    
     public static Preferences prefs;
     
     public static void load() {
-    	    	
+    	 //Chapas
     	chapaTexture = new Texture(Gdx.files.internal("textures/chapa.png"));
     	chapaNaranjaTexture = new Texture(Gdx.files.internal("textures/chapa-naranja.png"));
     	chapaAmarillaTexture = new Texture(Gdx.files.internal("textures/chapa-amarilla.png"));
@@ -32,15 +34,28 @@ public class AssetsLoader {
     	chapaAmarillaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
     	chapaRojaTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
     	chapaAzulTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-    	
-    	
+        	
         chapa = new TextureRegion(chapaTexture);
         chapaNaranja = new TextureRegion(chapaNaranjaTexture);
         chapaAmarilla = new TextureRegion(chapaAmarillaTexture);
         chapaRoja = new TextureRegion(chapaRojaTexture);
         chapaAzul = new TextureRegion(chapaAzulTexture);
-        chapaAzul.flip(true, true);
         
+        //Targets
+        targetRojoTexture = new Texture(Gdx.files.internal("textures/target-rojo.png"));
+        targetAzulTexture = new Texture(Gdx.files.internal("textures/target-azul.png"));
+        targetGrisTexture = new Texture(Gdx.files.internal("textures/target-gris.png"));
+        
+        targetRojoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        targetAzulTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        targetGrisTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        
+        targetRojo = new TextureRegion(targetRojoTexture);
+        targetAzul = new TextureRegion(targetAzulTexture);
+        targetGris = new TextureRegion(targetGrisTexture);
+        
+        
+        // Fondos
         circuitoTexture = new Texture(Gdx.files.internal("textures/circuito.jpg"));
         circuitoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         circuito = new TextureRegion(circuitoTexture);

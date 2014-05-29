@@ -4,17 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-import es.dvdbd.games.chapasrace.boards.LevelOne;
-import es.dvdbd.games.chapasrace.boards.VerticalDefaultBoard;
 import es.dvdbd.games.chapasrace.controllers.CameraInputController;
-import es.dvdbd.games.chapasrace.controllers.GameWorldInputController;
+import es.dvdbd.games.chapasrace.controllers.DefaultMoveStrategy;
+import es.dvdbd.games.chapasrace.controllers.DraggedMoveStrategy;
+import es.dvdbd.games.chapasrace.controllers.WorldTouchInputController;
 import es.dvdbd.games.chapasrace.engine.GameRenderer;
 import es.dvdbd.games.chapasrace.engine.GameWorld;
 import es.dvdbd.games.chapasrace.engine.HUDStage;
+import es.dvdbd.games.chapasrace.levels.LevelOne;
 
 
 
@@ -39,7 +37,9 @@ public class GameScreen implements Screen {
 		
 		camController = new CameraInputController(gameWorld, renderer.getCamera());
 		GestureDetector gestureDetector = new GestureDetector(5, 0.5f, 2, 0.15f, camController);
-		GameWorldInputController worldPhysicsController = new GameWorldInputController(gameWorld, renderer.getCamera());
+		WorldTouchInputController worldPhysicsController = new WorldTouchInputController(
+																renderer.getCamera(),
+																new DraggedMoveStrategy(gameWorld));
 				
 		input.addProcessor(hud.getStage());
 		input.addProcessor(worldPhysicsController);
