@@ -8,7 +8,6 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 import es.dvdbd.games.chapasrace.engine.GameWorld;
 
@@ -29,16 +28,16 @@ public class SmoothCameraController {
 	public void update(float delta) {
 		Vector2 newPos = getBoundedCamPosition(world.camPosition);
 		if(world.turnIsPlaying) {
-			System.out.println("Moviendo la camara. Con la chapa");
-			tweenHelpingHandler((int)newPos.x, (int)newPos.y, .5f, TweenEquations.easeNone);
-		} else if(!newPos.epsilonEquals(camera.position.x, camera.position.y, 10)) {
-			System.out.println("Moviendo la camara. Hacia camPosition");
-			tweenHelpingHandler((int)newPos.x, (int)newPos.y, 5f, TweenEquations.easeOutCirc);
+//			System.out.println("Moviendo la camara. Con la chapa");
+			animatedMoveTo((int)newPos.x, (int)newPos.y, .5f, TweenEquations.easeNone);
+		} else if(!newPos.epsilonEquals(camera.position.x, camera.position.y, 2)) {
+//			System.out.println("Moviendo la camara. Hacia camPosition");
+			animatedMoveTo((int)newPos.x, (int)newPos.y, 5f, TweenEquations.easeOutCirc);
 		}
 		tweenManager.update(delta);
 	}
 	
-	private void tweenHelpingHandler(int targetX, int targetY, float duration, TweenEquation tween) {
+	private void animatedMoveTo(int targetX, int targetY, float duration, TweenEquation tween) {
 		// kill current tween - or pre-existing 
 		tweenManager.killTarget(camera);
 		// move

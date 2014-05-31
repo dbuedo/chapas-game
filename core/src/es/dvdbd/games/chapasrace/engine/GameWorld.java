@@ -48,10 +48,7 @@ public class GameWorld {
 	public GameWorld(GameLevel level) {
 		this.level = level;
 		
-		physics = new World(new Vector2(0, 0), true);		
-
-		PhysicsFactory physicsFactory = new PhysicsFactory(physics);
-		factory = new GameWorldFactory(physicsFactory);
+		initPhysics();
 		this.level.init(factory);
 		loadLevel();
 				
@@ -94,15 +91,22 @@ public class GameWorld {
 		
 	}
 
+	private void initPhysics() {
+		physics = new World(new Vector2(0, 0), true);		
+
+		PhysicsFactory physicsFactory = new PhysicsFactory(physics);
+		factory = new GameWorldFactory(physicsFactory);
+	}
+
 	private void loadLevel() {
-		chapas = this.level.getChapas();
-		target = this.level.getTarget();
+		chapas = level.getChapas();
+		target = level.getTarget();
 		player1 = factory.createPlayer("Amarillo", chapas.get(0));
 		player2 = factory.createPlayer("Rojo", chapas.get(1));
 		turn = player1;
 		camPosition = level.getStartPosition();
-		worldWidth = this.level.getBoard().boardWidth;
-		worldHeight = this.level.getBoard().boardHeight;
+		worldWidth = level.getBoard().boardWidth;
+		worldHeight = level.getBoard().boardHeight;
 	}
 
 	public void update(float delta) {
@@ -172,13 +176,22 @@ public class GameWorld {
 	}
 	
 	private void restartLevel() {
+		System.out.println("##### RESTART LEVEL #########");
 		this.level.restart();
-		/*level.destroy();
+	/*	
+		GameLevel newLevel, prevLevel;
 		if(level instanceof LevelOne) {
-			level = new LevelTwo();
+			System.out.println("##### STARTING LEVEL 2 #########");
+			newLevel = new LevelTwo();
 		} else {
-			level = new LevelOne();
+			System.out.println("##### STARTING LEVEL 1 #########");
+			newLevel = new LevelOne();
 		}
-		level.init(factory);*/
+		initPhysics();
+		newLevel.init(factory);
+		prevLevel = level;
+		level = newLevel;
+		prevLevel.destroy();
+		prevLevel = null;*/
 	}
 }

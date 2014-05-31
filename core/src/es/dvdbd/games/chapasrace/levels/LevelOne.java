@@ -13,14 +13,14 @@ public class LevelOne extends GameLevel {
 		
 	@Override
 	protected void initStatics() {
-		System.out.println("Init statics...");
+		System.out.println("Level 1. Init statics...");
 		this.board = new VerticalDefaultBoard();
 		factory.physicsFactory.createWorldLimits(board.boardWidth, board.boardHeight);
 	}
 	
 	@Override
 	protected void initDynamics() {
-		System.out.println("Init dynamics...");
+		System.out.println("Level 1. Init dynamics...");
 		startPosition = new Vector2(12,10);
 		chapas = new ArrayList<Cap>();
 
@@ -35,12 +35,12 @@ public class LevelOne extends GameLevel {
 
 	@Override
 	protected void destroyStatics() {
-		System.out.println("Destroying statics...");		
+		System.out.println("Level 1. Destroying statics...");		
 	}
 
 	@Override
 	protected void destroyDynamics() {
-		System.out.println("Destroying dynamics...");
+		System.out.println("Level 1. Destroying dynamics...");
 		for(Cap chapa : chapas) {
 			PhysicsHelper.removeBodySafely(physics, chapa.getBody());
 		}

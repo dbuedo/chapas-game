@@ -2,6 +2,8 @@ package es.dvdbd.games.chapasrace.levels;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
 import es.dvdbd.games.chapasrace.boards.HorizontalDefaultBoard;
 import es.dvdbd.games.chapasrace.boards.VerticalDefaultBoard;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
@@ -13,14 +15,15 @@ public class LevelTwo extends GameLevel {
 		
 	@Override
 	protected void initStatics() {
-		System.out.println("Init statics...");
+		System.out.println("Level 2. Init statics...");
 		this.board = new HorizontalDefaultBoard();
 		factory.physicsFactory.createWorldLimits(board.boardWidth, board.boardHeight);
 	}
 	
 	@Override
 	protected void initDynamics() {
-		System.out.println("Init dynamics...");
+		System.out.println("Level 2. Init dynamics...");
+		startPosition = new Vector2(12,10);
 		chapas = new ArrayList<Cap>();
 
 		Cap chapa = factory.createCap("chapa-amarilla", 6, 10, Cap.Color.AMARILLA);
@@ -34,12 +37,12 @@ public class LevelTwo extends GameLevel {
 
 	@Override
 	protected void destroyStatics() {
-		System.out.println("Destroying statics...");		
+		System.out.println("Level 2. Destroying statics...");		
 	}
 
 	@Override
 	protected void destroyDynamics() {
-		System.out.println("Destroying dynamics...");
+		System.out.println("Level 2. Destroying dynamics...");
 		for(Cap chapa : chapas) {
 			PhysicsHelper.removeBodySafely(physics, chapa.getBody());
 		}

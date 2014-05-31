@@ -3,7 +3,6 @@ package es.dvdbd.games.chapasrace.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.input.GestureDetector;
 
 import es.dvdbd.games.chapasrace.controllers.DraggedMoveStrategy;
 import es.dvdbd.games.chapasrace.controllers.SmoothCameraController;
@@ -11,7 +10,7 @@ import es.dvdbd.games.chapasrace.controllers.WorldTouchInputController;
 import es.dvdbd.games.chapasrace.engine.GameRenderer;
 import es.dvdbd.games.chapasrace.engine.GameWorld;
 import es.dvdbd.games.chapasrace.engine.HUDStage;
-import es.dvdbd.games.chapasrace.levels.LevelOne;
+import es.dvdbd.games.chapasrace.levels.LevelTwo;
 
 
 
@@ -27,7 +26,7 @@ public class GameScreen implements Screen {
 	HUDStage hud;
 
 	public GameScreen() {
-		gameWorld = new GameWorld(new LevelOne());
+		gameWorld = new GameWorld(new LevelTwo());
 		renderer = new GameRenderer(gameWorld);
 		hud = new HUDStage(gameWorld);
 
