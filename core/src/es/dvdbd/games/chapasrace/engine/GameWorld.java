@@ -2,10 +2,9 @@ package es.dvdbd.games.chapasrace.engine;
 
 
 import java.util.List;
-import java.util.Observable;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -19,14 +18,14 @@ import es.dvdbd.games.chapasrace.gameobjects.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Player;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
 import es.dvdbd.games.chapasrace.levels.GameLevel;
-import es.dvdbd.games.chapasrace.levels.LevelOne;
-import es.dvdbd.games.chapasrace.levels.LevelTwo;
+import es.dvdbd.games.chapasrace.screens.MenuScreen;
 
 public class GameWorld {
 
 	public float worldWidth;
 	public float worldHeight;
 
+	public Game game;
 	public GameLevel level;
 	public GameWorldFactory factory;
 	
@@ -45,7 +44,8 @@ public class GameWorld {
 
 	public Vector2 camPosition;
 	
-	public GameWorld(GameLevel level) {
+	public GameWorld(Game game, GameLevel level) {
+		this.game = game;
 		this.level = level;
 		
 		initPhysics();
@@ -193,5 +193,10 @@ public class GameWorld {
 		level = newLevel;
 		prevLevel.destroy();
 		prevLevel = null;*/
+	}
+
+	public void menu() {
+		game.setScreen(new MenuScreen(game));
+		
 	}
 }

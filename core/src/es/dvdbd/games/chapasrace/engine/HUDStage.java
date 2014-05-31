@@ -24,6 +24,7 @@ public class HUDStage {
 	private Table tableBottomLeft, tableBottomRight;
 	
 	private TextButton resetButton;
+	private TextButton homeButton;
 		
 	public HUDStage(GameWorld gameWorld) {
 		this.world = gameWorld;
@@ -77,6 +78,15 @@ public class HUDStage {
 			}
 		});
 		
+		homeButton = new TextButton("Menu", skin);
+		homeButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("Home button");
+				menu();
+			}
+		});
+		
 	}
 	
 	public void render(float delta){
@@ -88,6 +98,8 @@ public class HUDStage {
 			tableCenter.add(winner);
 			tableCenter.row();
 			tableCenter.add(resetButton);
+			tableCenter.row();
+			tableCenter.add(homeButton);
 		} else {
 			fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
 			turn.setText("Turno de: " + world.turn.name);
@@ -104,6 +116,10 @@ public class HUDStage {
 		turn.setText("Turno de: " + world.turn.name);
 		score.setText("Toques: " + world.turn.score);	
 		tableCenter.clearChildren();	
+	}
+	
+	private void menu() {
+		world.menu();
 	}
 	
 	public Stage getStage() {

@@ -13,6 +13,8 @@ import es.dvdbd.games.chapasrace.ChapasRaceGame;
 
 public class AssetsLoader {
 
+	public static Texture logoTexture;
+	public static TextureRegion logo;
     public static Texture chapaTexture, chapaNaranjaTexture, chapaAmarillaTexture, chapaRojaTexture, chapaAzulTexture;
     public static Texture targetRojoTexture, targetAzulTexture, targetGrisTexture;
     public static Texture circuitoTexture, fondoPruebasTexture, verticalTexture;
@@ -22,6 +24,10 @@ public class AssetsLoader {
     public static Preferences prefs;
     
     public static void load() {
+    	//Logo
+    	logoTexture = new Texture(Gdx.files.internal("textures/logo.png"));
+    	logo = new TextureRegion(logoTexture);
+    	
     	 //Chapas
     	chapaTexture = new Texture(Gdx.files.internal("textures/chapa.png"));
     	chapaNaranjaTexture = new Texture(Gdx.files.internal("textures/chapa-naranja.png"));
