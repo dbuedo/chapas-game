@@ -97,7 +97,7 @@ public class CameraInputController implements GestureListener {
 		return false;
 	}
 
-	public void update() {
+	public void update(float delta) {
 		if(world.turnIsPlaying) {
 			setBoundedCamPosition(tridimension(world.camPosition));
 		} else if (flinging) {

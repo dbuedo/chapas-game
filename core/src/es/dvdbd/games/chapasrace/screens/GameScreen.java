@@ -5,9 +5,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.input.GestureDetector;
 
-import es.dvdbd.games.chapasrace.controllers.CameraInputController;
-import es.dvdbd.games.chapasrace.controllers.DefaultMoveStrategy;
 import es.dvdbd.games.chapasrace.controllers.DraggedMoveStrategy;
+import es.dvdbd.games.chapasrace.controllers.SmoothCameraController;
 import es.dvdbd.games.chapasrace.controllers.WorldTouchInputController;
 import es.dvdbd.games.chapasrace.engine.GameRenderer;
 import es.dvdbd.games.chapasrace.engine.GameWorld;
@@ -23,7 +22,7 @@ public class GameScreen implements Screen {
 	
 	GameRenderer renderer;
 	
-	CameraInputController camController;
+	SmoothCameraController camController;
 	GameWorld gameWorld;
 	HUDStage hud;
 
@@ -35,15 +34,15 @@ public class GameScreen implements Screen {
 		
 		InputMultiplexer input = new InputMultiplexer();
 		
-		camController = new CameraInputController(gameWorld, renderer.getCamera());
-		GestureDetector gestureDetector = new GestureDetector(5, 0.5f, 2, 0.15f, camController);
+		camController = new SmoothCameraController(gameWorld, renderer.getCamera());
+	//	GestureDetector gestureDetector = new GestureDetector(5, 0.5f, 2, 0.15f, camController);
 		WorldTouchInputController worldPhysicsController = new WorldTouchInputController(
 																renderer.getCamera(),
 																new DraggedMoveStrategy(gameWorld));
 				
 		input.addProcessor(hud.getStage());
 		input.addProcessor(worldPhysicsController);
-		input.addProcessor(gestureDetector);
+	//	input.addProcessor(gestureDetector);
 		Gdx.input.setInputProcessor(input);
 		
 	}
@@ -52,7 +51,7 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		runTime += delta;
 		gameWorld.update(delta);
-		camController.update();
+		camController.update(delta);
 		renderer.render(delta, runTime);
 		hud.render(delta);
 	}
