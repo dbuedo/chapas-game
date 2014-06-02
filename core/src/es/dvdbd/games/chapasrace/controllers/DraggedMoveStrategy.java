@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 import es.dvdbd.games.chapasrace.engine.GameWorld;
+import es.dvdbd.games.chapasrace.engine.GameWorld.GameStatus;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
 
 public class DraggedMoveStrategy implements TouchMoveStrategy {
@@ -43,27 +44,29 @@ public class DraggedMoveStrategy implements TouchMoveStrategy {
 		proccessTouch = false;
 		hitBody = null;
 		testPoint.set(worldPoint);
-		gameWorld.physics.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f,
-				testPoint.x + 0.0001f, testPoint.y + 0.0001f);
-		
-		if (hitBody != null) {
-			System.out.println("touchDown en CHAPA: touch.x=" + testPoint.x + " touch.y=" + testPoint.y + 
-					" body.x=" + hitBody.getPosition().x + " body.y=" +  hitBody.getPosition().y + "");
+		if(gameWorld.isRunning()) {
+			gameWorld.physics.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f,
+					testPoint.x + 0.0001f, testPoint.y + 0.0001f);
 			
-			
-			proccessTouch = true;
-			if(gameWorld.turnIsPlaying ||  !hitBody.equals(gameWorld.turn.cap.getBody())) {
-				System.out.println("No es tu turno!!");
-				hitBody = null;
-			} else {
-				MouseJointDef def = new MouseJointDef();
-				def.bodyA = gameWorld.target.getBody();
-				def.bodyB = hitBody;
-				def.collideConnected = true;
-				def.target.set(testPoint.x, testPoint.y);
-				def.maxForce = 1000.0f * hitBody.getMass();
-				mouseJoint = (MouseJoint) gameWorld.physics.createJoint(def);
-				hitBody.setAwake(true); 
+			if (hitBody != null) {
+				System.out.println("touchDown en CHAPA: touch.x=" + testPoint.x + " touch.y=" + testPoint.y + 
+						" body.x=" + hitBody.getPosition().x + " body.y=" +  hitBody.getPosition().y + "");
+				
+				
+				proccessTouch = true;
+				if(!hitBody.equals(gameWorld.turn.cap.getBody())) {
+					System.out.println("No es tu turno!!");
+					hitBody = null;
+				} else {
+					MouseJointDef def = new MouseJointDef();
+					def.bodyA = gameWorld.target.getBody();
+					def.bodyB = hitBody;
+					def.collideConnected = true;
+					def.target.set(testPoint.x, testPoint.y);
+					def.maxForce = 1000.0f * hitBody.getMass();
+					mouseJoint = (MouseJoint) gameWorld.physics.createJoint(def);
+					hitBody.setAwake(true); 
+				}
 			}
 		}
 		return proccessTouch;
@@ -73,8 +76,7 @@ public class DraggedMoveStrategy implements TouchMoveStrategy {
 	public boolean touchUp(Vector3 worldPoint, int pointer) {
 		targetPoint.set(worldPoint);
 		if (hitBody != null) {
-			gameWorld.turnIsPlaying = true;
-			gameWorld.turn.score++;
+			gameWorld.setMovingCap();
 			System.out.println("touchUp la chapa!! Moviendo chapa: " + ((Cap)hitBody.getUserData()).getId());
 			hitBody = null;
 			gameWorld.physics.destroyJoint(mouseJoint);

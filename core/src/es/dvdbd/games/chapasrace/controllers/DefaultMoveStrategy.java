@@ -48,7 +48,7 @@ public class DefaultMoveStrategy implements TouchMoveStrategy {
 					" body.x=" + hitBody.getPosition().x + " body.y=" +  hitBody.getPosition().y + "");
 			
 			
-			if(gameWorld.turnIsPlaying ||  !hitBody.equals(gameWorld.turn.cap.getBody())) {
+			if(gameWorld.isTurnPlaying() ||  !hitBody.equals(gameWorld.turn.cap.getBody())) {
 				System.out.println("No es tu turno!!");
 				hitBody = null;
 			}
@@ -60,8 +60,7 @@ public class DefaultMoveStrategy implements TouchMoveStrategy {
 	public boolean touchUp(Vector3 worldPoint, int pointer) {
 		targetPoint.set(worldPoint);
 		if (hitBody != null) {
-			gameWorld.turnIsPlaying = true;
-			gameWorld.turn.score++;
+			gameWorld.setMovingCap();
 			System.out.println("touchUp la chapa!! Moviendo chapa: " + ((Cap)hitBody.getUserData()).getId());
 
 			

@@ -23,12 +23,17 @@ import es.dvdbd.games.chapasrace.screens.MenuScreen;
 
 public class GameWorld {
 
+	public static enum GameStatus { PAUSED, RUNNING, TURN_PLAYING, WINNED, RESTARTING }; 
+	
 	public float worldWidth;
 	public float worldHeight;
 
 	public Game game;
 	public GameLevel level;
+	public GameStatus status;
+	
 	public GameWorldFactory factory;
+	
 	
 	public World physics;
 	public List<Cap> chapas;
@@ -38,24 +43,17 @@ public class GameWorld {
 	public Player turn;
 	public Player winner;
 
-	public boolean gamePaused = false;
-	public boolean gameWinned = false;
-	public boolean gameRestart = false;
-	public boolean turnIsPlaying = false;
 
 	public Vector2 camPosition;
 	
 	public GameWorld(Game game, GameLevel level) {
 		this.game = game;
 		this.level = level;
-		
 		initPhysics();
 		this.level.init(factory);
 		loadLevel();
 				
-		physics.setContactListener(new TargetCollisionListener(this));
-
-		
+		physics.setContactListener(new TargetCollisionListener(this));		
 	}
 
 	private void initPhysics() {
@@ -71,21 +69,29 @@ public class GameWorld {
 		player1 = factory.createPlayer("Amarillo", chapas.get(0));
 		player2 = factory.createPlayer("Rojo", chapas.get(1));
 		turn = player1;
+		winner = null;
 		camPosition = level.getStartPosition();
 		worldWidth = level.getBoard().boardWidth;
 		worldHeight = level.getBoard().boardHeight;
+		setStatus(GameStatus.RUNNING);
 	}
 
 	public void update(float delta) {
 		for (Cap chapa : chapas) {
 			chapa.update(delta);
 		}
-		physics.step(gamePaused?0:delta, 3, 3);
-		if(gameRestart) {
+		
+		if(isPaused() || isWinned()) {
+			physics.step(0, 3, 3);
+		} else {
+			physics.step(delta, 3, 3);
+		}
+		
+		if(isRestarting()) {
 			restartWorld();
-		} else if (turnIsPlaying) {
+		} else if (isTurnPlaying()) {
 			if(!hasMovingBodies()) {
-				turnIsPlaying = false;
+				setStatus(GameStatus.RUNNING);
 				System.out.println("Todo quieto!");
 				nextTurn();	
 			}
@@ -108,7 +114,7 @@ public class GameWorld {
 	}
 
 	public void nextTurn() {
-		if(!gameWinned) {
+		if(!isWinned()) {
 			System.out.println("Cambio de turno");
 			if (turn.equals(player1)) {
 				turn = player2;
@@ -119,8 +125,7 @@ public class GameWorld {
 	}
 	
 	public void setWinner(Player player) {
-		this.gamePaused = true;
-		this.gameWinned = true;
+		setStatus(GameStatus.WINNED);		
 		winner = player;
 		
 		System.out.println("########################################");
@@ -129,22 +134,18 @@ public class GameWorld {
 	}
 
 	public void restart() {
-		gameRestart = true;
+		setStatus(GameStatus.RESTARTING);
 	}
 	
 	private void restartWorld() {
-		turnIsPlaying = false;
-		winner = null;
-		gameWinned = false;
+		
 		restartLevel();
-		loadLevel();	
-		gamePaused = false;
-		gameRestart = false;
+		loadLevel();
 	}
 	
 	private void restartLevel() {
 		System.out.println("##### RESTART LEVEL #########");
-		this.level.restart();
+		level.restart();
 	/*	
 		GameLevel newLevel, prevLevel;
 		if(level instanceof LevelOne) {
@@ -165,5 +166,38 @@ public class GameWorld {
 	public void menu() {
 		game.setScreen(new MenuScreen(game));
 		
+	}
+	
+	public void setMovingCap() {
+		setStatus(GameStatus.TURN_PLAYING);
+		turn.score++;
+	}
+
+	public boolean isPaused() {
+		return  getStatus() == GameStatus.PAUSED;
+	}
+	
+	public boolean isRunning() {
+		return  getStatus() == GameStatus.RUNNING;
+	}
+	
+	public boolean isTurnPlaying() {
+		return  getStatus() == GameStatus.TURN_PLAYING;
+	}
+	
+	public boolean isWinned() {
+		return getStatus() == GameStatus.WINNED;
+	}
+	
+	public boolean isRestarting() {
+		return getStatus() == GameStatus.RESTARTING;
+	}
+	
+	public GameStatus getStatus() {
+		return this.status;  
+	}
+	
+	public void setStatus(GameStatus status) {
+		this.status = status;  
 	}
 }

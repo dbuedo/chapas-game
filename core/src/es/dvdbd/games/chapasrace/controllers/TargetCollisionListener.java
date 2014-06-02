@@ -19,12 +19,11 @@ public class TargetCollisionListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
-		System.out.println("endContact");
+
 	}
 
 	@Override
 	public void beginContact(Contact contact) {
-		System.out.println("beginContact");
 		  Fixture fixtureA = contact.getFixtureA();
 		  Fixture fixtureB = contact.getFixtureB();
 		  Object userDataA = fixtureA.getBody().getUserData();
@@ -46,12 +45,12 @@ public class TargetCollisionListener implements ContactListener {
 	
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		System.out.println("preSolve");
+
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		System.out.println("postSolve");
+
 	}
 
 }

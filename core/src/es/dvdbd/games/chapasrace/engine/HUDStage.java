@@ -96,7 +96,7 @@ public class HUDStage {
 	}
 	
 	public void render(float delta){
-		if(world.gameWinned) {
+		if(world.isWinned()) {
 			fps.setText("");
 			turn.setText("");
 			score.setText("");
@@ -118,7 +118,6 @@ public class HUDStage {
 		fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
 		turn.setText("Turno de: " + world.turn.name);
 		score.setText("Toques: " + world.turn.score);	
-		tableCenter.clearChildren();	
 	}
 	
 	private void menu() {

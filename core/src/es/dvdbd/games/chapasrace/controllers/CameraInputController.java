@@ -1,8 +1,5 @@
 package es.dvdbd.games.chapasrace.controllers;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -98,7 +95,7 @@ public class CameraInputController implements GestureListener {
 	}
 
 	public void update(float delta) {
-		if(world.turnIsPlaying) {
+		if(world.isTurnPlaying()) {
 			setBoundedCamPosition(tridimension(world.camPosition));
 		} else if (flinging) {
 			velX *= 0.98f;
