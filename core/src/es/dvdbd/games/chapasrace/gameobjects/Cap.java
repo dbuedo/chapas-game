@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
-public class Cap extends GameObject {
+public class Cap extends GameBody {
 
 	
 	public enum Color { BLANCA, NARANJA, AMARILLA, ROJA, AZUL};

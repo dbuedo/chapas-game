@@ -87,6 +87,12 @@ public class HUDStage {
 			}
 		});
 		
+		tableCenter.add(winner).size(300, 60).uniform().spaceBottom(10);
+		tableCenter.row();
+		tableCenter.add(resetButton).size(300, 60).uniform().spaceBottom(10);
+		tableCenter.row();
+		tableCenter.add(homeButton).size(300, 60).uniform().spaceBottom(10);
+		
 	}
 	
 	public void render(float delta){
@@ -95,15 +101,12 @@ public class HUDStage {
 			turn.setText("");
 			score.setText("");
 			winner.setText(" ¡¡¡ " + world.winner.name + " GANA LA PARTIDA !!! ");
-			tableCenter.add(winner);
-			tableCenter.row();
-			tableCenter.add(resetButton);
-			tableCenter.row();
-			tableCenter.add(homeButton);
+			tableCenter.setVisible(true);
 		} else {
 			fps.setText("fps: " + Gdx.graphics.getFramesPerSecond());
 			turn.setText("Turno de: " + world.turn.name);
-			score.setText("Toques: " + world.turn.score);	
+			score.setText("Toques: " + world.turn.score);
+			tableCenter.setVisible(false);
 		}
 		stage.act(Math.min(delta, 1 / 30f));
 		stage.draw();

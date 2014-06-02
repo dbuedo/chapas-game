@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
-public class Target extends GameObject {
+public class Target extends GameBody {
 
 	private TextureRegion texture;
 	

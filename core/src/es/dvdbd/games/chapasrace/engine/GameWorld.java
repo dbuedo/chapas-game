@@ -12,9 +12,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
+import es.dvdbd.games.chapasrace.controllers.TargetCollisionListener;
+import es.dvdbd.games.chapasrace.factories.GameWorldFactory;
+import es.dvdbd.games.chapasrace.factories.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
-import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
-import es.dvdbd.games.chapasrace.gameobjects.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Player;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
 import es.dvdbd.games.chapasrace.levels.GameLevel;
@@ -52,41 +53,7 @@ public class GameWorld {
 		this.level.init(factory);
 		loadLevel();
 				
-		physics.setContactListener(new ContactListener() {
-
-			@Override
-			public void endContact(Contact contact) {
-			}
-
-			@Override
-			public void beginContact(Contact contact) {
-				  Fixture fixtureA = contact.getFixtureA();
-				  Fixture fixtureB = contact.getFixtureB();
-				  Object userDataA = fixtureA.getBody().getUserData();
-				  Object userDataB = fixtureB.getBody().getUserData();
-				  if (userDataA instanceof Target) {
-					  checkTargetCollision(userDataB);
-				  } else if (userDataB instanceof Target) {
-					  checkTargetCollision(userDataA);
-				  }
-			}
-			
-			private void checkTargetCollision(Object cap) {
-				if(cap.equals(player1.cap)){
-					setWinner(player1);
-				} else if(cap.equals(player2.cap)){
-					setWinner(player2);
-				}
-			}
-
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}
-
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-			}
-		});
+		physics.setContactListener(new TargetCollisionListener(this));
 
 		
 	}

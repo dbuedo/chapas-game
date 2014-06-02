@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import es.dvdbd.games.chapasrace.boards.HorizontalDefaultBoard;
 import es.dvdbd.games.chapasrace.boards.VerticalDefaultBoard;
+import es.dvdbd.games.chapasrace.factories.GameWorldFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
-import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
 import es.dvdbd.games.chapasrace.util.PhysicsHelper;
 
 public class LevelTwo extends GameLevel {

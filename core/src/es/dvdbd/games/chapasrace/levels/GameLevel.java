@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 
 import es.dvdbd.games.chapasrace.boards.GameBoard;
+import es.dvdbd.games.chapasrace.factories.GameWorldFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
-import es.dvdbd.games.chapasrace.gameobjects.GameWorldFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
 
 public abstract class GameLevel {

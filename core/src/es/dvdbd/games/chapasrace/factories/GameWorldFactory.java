@@ -1,6 +1,11 @@
-package es.dvdbd.games.chapasrace.gameobjects;
+package es.dvdbd.games.chapasrace.factories;
 
 import com.badlogic.gdx.physics.box2d.Body;
+
+import es.dvdbd.games.chapasrace.gameobjects.Cap;
+import es.dvdbd.games.chapasrace.gameobjects.Player;
+import es.dvdbd.games.chapasrace.gameobjects.Target;
+import es.dvdbd.games.chapasrace.gameobjects.Cap.Color;
 
 public class GameWorldFactory {
 	
