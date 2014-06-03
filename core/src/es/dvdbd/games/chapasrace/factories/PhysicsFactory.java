@@ -88,7 +88,7 @@ public class PhysicsFactory {
 		FixtureDef fd = new FixtureDef();
 		fd.shape = circleShape;
 		fd.density = 0.0f;
-		fd.isSensor = true;
+	//	fd.isSensor = true;
 		
 		target.createFixture(fd);
 	

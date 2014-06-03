@@ -5,14 +5,9 @@ import java.util.List;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.dvdbd.games.chapasrace.controllers.TargetCollisionListener;
+import es.dvdbd.games.chapasrace.controllers.ConctactsManager;
 import es.dvdbd.games.chapasrace.factories.GameWorldFactory;
 import es.dvdbd.games.chapasrace.factories.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
@@ -53,7 +48,7 @@ public class GameWorld {
 		this.level.init(factory);
 		loadLevel();
 				
-		physics.setContactListener(new TargetCollisionListener(this));		
+		physics.setContactListener(new ConctactsManager(this));		
 	}
 
 	private void initPhysics() {
@@ -66,8 +61,13 @@ public class GameWorld {
 	private void loadLevel() {
 		chapas = level.getChapas();
 		target = level.getTarget();
-		player1 = factory.createPlayer("Amarillo", chapas.get(0));
-		player2 = factory.createPlayer("Rojo", chapas.get(1));
+		Cap chapa1 = chapas.get(0);
+		player1 = factory.createPlayer("Amarillo", chapa1);
+		chapa1.setOwner(player1);
+		Cap chapa2 = chapas.get(1);
+		player2 = factory.createPlayer("Rojo", chapa2);
+		chapa2.setOwner(player2);
+		
 		turn = player1;
 		winner = null;
 		camPosition = level.getStartPosition();
@@ -81,10 +81,10 @@ public class GameWorld {
 			chapa.update(delta);
 		}
 		
-		if(isPaused() || isWinned()) {
-			physics.step(0, 3, 3);
-		} else {
+		if(isTurnPlaying() || isRunning()) {
 			physics.step(delta, 3, 3);
+		} else {
+			physics.step(0, 3, 3);
 		}
 		
 		if(isRestarting()) {

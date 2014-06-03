@@ -10,13 +10,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
-public class Cap extends GameBody {
+public class Cap extends GameObject {
 
 	
 	public enum Color { BLANCA, NARANJA, AMARILLA, ROJA, AZUL};
 	
 	private String id;
 	private Sprite sprite;
+	private Player owner;
 	
 	
 	public Cap(String capId, Body physicalBody, Color color) {
@@ -98,5 +99,13 @@ public class Cap extends GameBody {
 
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+	
+	public Player getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 }

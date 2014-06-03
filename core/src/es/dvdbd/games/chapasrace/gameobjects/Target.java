@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import es.dvdbd.games.chapasrace.util.AssetsLoader;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
-public class Target extends GameBody {
+public class Target extends GameObject implements GameZone {
 
 	private TextureRegion texture;
 	
@@ -25,5 +25,7 @@ public class Target extends GameBody {
 	public void render(SpriteBatch batch, float delta, float runTime) {
 		batch.draw(texture, body.getPosition().x-GameConstants.TARGET_RADIUS, body.getPosition().y-GameConstants.TARGET_RADIUS, GameConstants.TARGET_RADIUS*2, GameConstants.TARGET_RADIUS*2);
 	}
+
+
 
 }
