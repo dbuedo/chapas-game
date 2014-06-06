@@ -7,6 +7,6 @@ public class VerticalDefaultBoard extends GameBoard {
 	public VerticalDefaultBoard() {
 		this.boardWidth = 24f;
 		this.boardHeight = 160f;
-		this.texture = AssetsLoader.vertical;
+		this.texture = AssetsLoader.verticalTexture;
 	}
 }

@@ -1,12 +1,15 @@
 package es.dvdbd.games.chapasrace.boards;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 
 public abstract class GameBoard {
 
 	public float boardWidth;
 	public float boardHeight;
-	public TextureRegion texture;
+	public Texture texture;
 	
+	public boolean tiled = false;
+	public float tileWidth;
+	public float tileHeight;
 	
 }

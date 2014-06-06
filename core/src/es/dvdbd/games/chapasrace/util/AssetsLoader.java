@@ -17,10 +17,10 @@ public class AssetsLoader {
 	public static TextureRegion logo;
     public static Texture chapaTexture, chapaNaranjaTexture, chapaAmarillaTexture, chapaRojaTexture, chapaAzulTexture;
     public static Texture targetRojoTexture, targetAzulTexture, targetGrisTexture;
-    public static Texture circuitoTexture, fondoPruebasTexture, verticalTexture;
+    public static Texture circuitoTexture, fondoPruebasTexture, verticalTexture, horizontalTexture;
     public static TextureRegion chapa, chapaNaranja, chapaAmarilla, chapaRoja, chapaAzul;
     public static TextureRegion targetRojo, targetAzul, targetGris;
-    public static TextureRegion circuito, fondoPruebas, vertical;    
+    public static TextureRegion circuito, fondoPruebas, vertical, horizontal;    
     public static Preferences prefs;
     
     public static void load() {
@@ -73,6 +73,10 @@ public class AssetsLoader {
         verticalTexture = new Texture(Gdx.files.internal("textures/vertical.png"));
         verticalTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         vertical = new TextureRegion(verticalTexture);
+        
+        horizontalTexture = new Texture(Gdx.files.internal("textures/horizontal-tile.png"));
+        horizontalTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        horizontal = new TextureRegion(horizontalTexture);
         
                 
         prefs = Gdx.app.getPreferences(ChapasRaceGame.class.getSimpleName());
