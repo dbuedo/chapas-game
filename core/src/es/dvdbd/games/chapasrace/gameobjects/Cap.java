@@ -13,26 +13,29 @@ import es.dvdbd.games.chapasrace.util.GameConstants;
 public class Cap extends GameObject {
 
 	
-	public enum Color { BLANCA, NARANJA, AMARILLA, ROJA, AZUL};
+	public enum Color { WHITE, ORANGE, YELLOW, RED, BLUE};
+	
+	public enum Status { DEFAULT, SELECTED };
 	
 	private String id;
 	private Sprite sprite;
 	private Player owner;
-	
+	private Status status;
 	
 	public Cap(String capId, Body physicalBody, Color color) {
 		super(physicalBody);
-		this.id = capId;
+		id = capId;
+		status = Status.DEFAULT;
 		
 		TextureRegion texture;
 		switch(color) {
-			case NARANJA: texture = AssetsLoader.chapaNaranja; break;
-			case AMARILLA: texture = AssetsLoader.chapaAmarilla; break;
-			case ROJA: texture = AssetsLoader.chapaRoja; break;
-			case AZUL: texture = AssetsLoader.chapaAzul; break;
+			case ORANGE: texture = AssetsLoader.chapaNaranja; break;
+			case YELLOW: texture = AssetsLoader.chapaAmarilla; break;
+			case RED: texture = AssetsLoader.chapaRoja; break;
+			case BLUE: texture = AssetsLoader.chapaAzul; break;
 			default: texture = AssetsLoader.chapa; break;
 		}
-		this.sprite = new Sprite(texture);
+		sprite = new Sprite(texture);
 		sprite.setSize(GameConstants.CAP_RADIUS*2, GameConstants.CAP_RADIUS*2);
 		sprite.setOriginCenter();
 	}
@@ -44,15 +47,6 @@ public class Cap extends GameObject {
 
 	@Override
 	public void render(SpriteBatch batch, float delta, float runTime) {
-/*		batch.draw(
-				sprite.getTexture(),                                 
-				body.getPosition().x-GameConstants.CAP_RADIUS,           
-				body.getPosition().y-GameConstants.CAP_RADIUS,             
-				GameConstants.CAP_RADIUS*2,                       // width,      
-				GameConstants.CAP_RADIUS*2                       // height,        
-				);
-	*/	
-
 		sprite.translate(-GameConstants.CAP_RADIUS, -GameConstants.CAP_RADIUS);
 		sprite.draw(batch);
 	}                                                                      
@@ -65,14 +59,14 @@ public class Cap extends GameObject {
 				System.out.println("stoping chapa " + id);
 				vel.x = 0;
 				vel.y = 0;
-				this.body.setLinearVelocity(vel);
-				this.body.setAngularVelocity(0);
+				body.setLinearVelocity(vel);
+				body.setAngularVelocity(0);
 			} else {
 				Vector2 velFrictioned = vel.scl(-1 * friction);
-				this.body.applyForceToCenter(velFrictioned, true);
+				body.applyForceToCenter(velFrictioned, true);
 			}
 		} else {
-			this.body.setAngularVelocity(0);
+			body.setAngularVelocity(0);
 		}
 		
 		float angularVelocity = body.getAngularVelocity();
@@ -108,4 +102,14 @@ public class Cap extends GameObject {
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	
 }

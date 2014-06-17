@@ -15,13 +15,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import es.dvdbd.games.chapasrace.boards.GameBoard;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
+import es.dvdbd.games.chapasrace.gameobjects.Obstacle;
 import es.dvdbd.games.chapasrace.util.GameConstants;
 
 public class GameRenderer {
 	
 	
-	public static boolean RENDER_TEXTURES = true;
-	public static boolean RENDER_DEBUG = false;
+	public static boolean RENDER_TEXTURES = false;
+	public static boolean RENDER_DEBUG = true;
 
 
 	public float viewportWidth;
@@ -116,7 +117,11 @@ public class GameRenderer {
 			world.target.render(batch, delta, runTime);
 			for(Cap chapa : world.chapas) {
 				chapa.render(batch, delta, runTime);
-			}			
+			}	
+			
+			for(Obstacle obs : world.level.getObstacles() ) {
+				obs.render(batch, delta, runTime);
+			}
 
 			batch.end();
 		}

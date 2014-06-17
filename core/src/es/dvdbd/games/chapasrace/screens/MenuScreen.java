@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import es.dvdbd.games.chapasrace.levels.LevelOne;
-import es.dvdbd.games.chapasrace.levels.LevelTwo;
+import es.dvdbd.games.chapasrace.factories.LevelFactory;
+import es.dvdbd.games.chapasrace.factories.LevelFactory.Level;
 
 public class MenuScreen implements Screen {
 	
@@ -36,34 +36,26 @@ public class MenuScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 		
-		
-        TextButton levelOneButton = new TextButton( "Level One", skin );
-        levelOneButton.addListener(
-        		new ChangeListener() {
-        			@Override
-        			public void changed(ChangeEvent event, Actor actor) {
-        				System.out.println("Level One button");
-        				game.setScreen(new GameScreen(game, new LevelOne()));
-        			}
-        		}
-        );
-        table.add(levelOneButton).size(300, 60).uniform().spaceBottom(10);
-        
-        table.row();
-        
-        TextButton levelTwoButton = new TextButton( "Level Two", skin );
-        levelTwoButton.addListener(
-        		new ChangeListener() {
-        			@Override
-        			public void changed(ChangeEvent event, Actor actor) {
-        				System.out.println("Level Two button");
-        				game.setScreen(new GameScreen(game, new LevelTwo()));
-        			}
-        		}
-        );
-        table.add(levelTwoButton).size(300, 60).uniform().spaceBottom(10);
-		
+		for(Level level : Level.values()) {
+			 addLevel(table, level.toString(),level);
+			 table.row();
+		}		
 	}
+
+	private void addLevel(Table table, final String name, final Level level) {
+		TextButton levelButton = new TextButton( name, skin );
+		levelButton.addListener(
+        		new ChangeListener() {
+        			@Override
+        			public void changed(ChangeEvent event, Actor actor) {
+        				game.setScreen(new GameScreen(game, LevelFactory.createGameLevel(level)));
+        			}
+        		}
+        );
+        table.add(levelButton).size(300, 60).uniform().spaceBottom(10);
+	}
+	
+
 	
 	@Override
 	public void render(float delta) {

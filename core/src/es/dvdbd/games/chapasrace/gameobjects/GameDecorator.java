@@ -1,6 +1,7 @@
 package es.dvdbd.games.chapasrace.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public abstract class GameDecorator implements GameComponent {
 	
@@ -14,6 +15,11 @@ public abstract class GameDecorator implements GameComponent {
 		return component;
 	}
 
+	@Override
+	public Vector2 getPosition() {
+		return component.getPosition();
+	}
+	
 	@Override
 	public void update(float delta) {
 		component.update(delta);

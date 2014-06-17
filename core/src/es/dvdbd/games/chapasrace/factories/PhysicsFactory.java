@@ -96,4 +96,27 @@ public class PhysicsFactory {
 		
 		return target;		
 	}
+
+	public Body createObstacle(float positionX, float positionY, float width, float height) {
+		Body solid;
+		
+		BodyDef solidBodyDef = new BodyDef();
+		solidBodyDef.type = BodyType.StaticBody;
+		solidBodyDef.position.x = positionX;
+		solidBodyDef.position.y = positionY;
+		
+		solid = physics.createBody(solidBodyDef);
+		
+		PolygonShape solidShape = new PolygonShape();
+		solidShape.setAsBox(width/2, height/2);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = solidShape;
+		
+		solid.createFixture(fd);
+		
+		solidShape.dispose();
+		
+		return solid;
+	}
 }

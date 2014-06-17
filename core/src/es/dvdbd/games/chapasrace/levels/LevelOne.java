@@ -24,10 +24,10 @@ public class LevelOne extends GameLevel {
 		startPosition = new Vector2(12,10);
 		chapas = new ArrayList<Cap>();
 
-		Cap chapa = factory.createCap("chapa-amarilla", 6, 10, Cap.Color.AMARILLA);
+		Cap chapa = factory.createCap("chapa-amarilla", 6, 10, Cap.Color.YELLOW);
 		chapas.add(0,chapa);
 
-		chapa = factory.createCap("chapa-roja", 18, 10, Cap.Color.ROJA);
+		chapa = factory.createCap("chapa-roja", 18, 10, Cap.Color.RED);
 		chapas.add(1,chapa);
 
 		target = factory.createTarget(12, 150);		

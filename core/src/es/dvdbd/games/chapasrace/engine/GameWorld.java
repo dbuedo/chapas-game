@@ -1,6 +1,7 @@
 package es.dvdbd.games.chapasrace.engine;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Game;
@@ -11,6 +12,7 @@ import es.dvdbd.games.chapasrace.controllers.ConctactsManager;
 import es.dvdbd.games.chapasrace.factories.GameWorldFactory;
 import es.dvdbd.games.chapasrace.factories.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
+import es.dvdbd.games.chapasrace.gameobjects.Obstacle;
 import es.dvdbd.games.chapasrace.gameobjects.Player;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
 import es.dvdbd.games.chapasrace.levels.GameLevel;
@@ -33,6 +35,7 @@ public class GameWorld {
 	public World physics;
 	public List<Cap> chapas;
 	public Target target;
+
 
 	public Player player1, player2;
 	public Player turn;

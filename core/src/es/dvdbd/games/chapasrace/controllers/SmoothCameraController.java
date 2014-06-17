@@ -29,10 +29,8 @@ public class SmoothCameraController {
 	public void update(float delta) {
 		Vector2 newPos = getBoundedCamPosition(world.camPosition);
 		if(world.isTurnPlaying()) {
-//			System.out.println("Moviendo la camara. Con la chapa");
 			animatedMoveTo((int)newPos.x, (int)newPos.y, .5f, TweenEquations.easeNone);
 		} else if(!newPos.epsilonEquals(camera.position.x, camera.position.y, 2)) {
-//			System.out.println("Moviendo la camara. Hacia camPosition");
 			animatedMoveTo((int)newPos.x, (int)newPos.y, 5f, TweenEquations.easeOutCirc);
 		}
 		tweenManager.update(delta);

@@ -16,6 +16,7 @@ public abstract class GameObject implements GameComponent {
 		return body;
 	}
 	
+	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
