@@ -1,6 +1,7 @@
 package es.dvdbd.games.chapasrace.factories;
 
 import es.dvdbd.games.chapasrace.levels.GameLevel;
+import es.dvdbd.games.chapasrace.levels.LevelFour;
 import es.dvdbd.games.chapasrace.levels.LevelOne;
 import es.dvdbd.games.chapasrace.levels.LevelThree;
 import es.dvdbd.games.chapasrace.levels.LevelTwo;
@@ -25,7 +26,15 @@ public class LevelFactory {
 			protected GameLevel create() {
 				return new LevelThree();
 			}
-		};
+		}
+		,
+		FOUR {
+			@Override
+			protected GameLevel create() {
+				return new LevelFour();
+			}
+		}
+		;
 
 		protected abstract GameLevel create();
 

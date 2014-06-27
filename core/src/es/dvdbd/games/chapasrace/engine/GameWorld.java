@@ -1,7 +1,6 @@
 package es.dvdbd.games.chapasrace.engine;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Game;
@@ -12,7 +11,6 @@ import es.dvdbd.games.chapasrace.controllers.ConctactsManager;
 import es.dvdbd.games.chapasrace.factories.GameWorldFactory;
 import es.dvdbd.games.chapasrace.factories.PhysicsFactory;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
-import es.dvdbd.games.chapasrace.gameobjects.Obstacle;
 import es.dvdbd.games.chapasrace.gameobjects.Player;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
 import es.dvdbd.games.chapasrace.levels.GameLevel;
@@ -72,10 +70,11 @@ public class GameWorld {
 		chapa2.setOwner(player2);
 		
 		turn = player1;
+		turn.cap.setStatus(Cap.Status.SELECTED);
 		winner = null;
 		camPosition = level.getStartPosition();
-		worldWidth = level.getBoard().boardWidth;
-		worldHeight = level.getBoard().boardHeight;
+		worldWidth = level.getBoard().getBoardWidth();
+		worldHeight = level.getBoard().getBoardHeight();
 		setStatus(GameStatus.RUNNING);
 	}
 
@@ -98,7 +97,9 @@ public class GameWorld {
 				System.out.println("Todo quieto!");
 				nextTurn();	
 			}
+			
 			camPosition = turn.cap.getPosition().cpy();
+			
 		}
 	}
 
@@ -121,8 +122,12 @@ public class GameWorld {
 			System.out.println("Cambio de turno");
 			if (turn.equals(player1)) {
 				turn = player2;
+				player2.cap.setStatus(Cap.Status.SELECTED);
+				player1.cap.setStatus(Cap.Status.DEFAULT);
 			} else {
 				turn = player1;
+				player1.cap.setStatus(Cap.Status.SELECTED);
+				player2.cap.setStatus(Cap.Status.DEFAULT);
 			}
 		}
 	}
@@ -149,21 +154,6 @@ public class GameWorld {
 	private void restartLevel() {
 		System.out.println("##### RESTART LEVEL #########");
 		level.restart();
-	/*	
-		GameLevel newLevel, prevLevel;
-		if(level instanceof LevelOne) {
-			System.out.println("##### STARTING LEVEL 2 #########");
-			newLevel = new LevelTwo();
-		} else {
-			System.out.println("##### STARTING LEVEL 1 #########");
-			newLevel = new LevelOne();
-		}
-		initPhysics();
-		newLevel.init(factory);
-		prevLevel = level;
-		level = newLevel;
-		prevLevel.destroy();
-		prevLevel = null;*/
 	}
 
 	public void menu() {

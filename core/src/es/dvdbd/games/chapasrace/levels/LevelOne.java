@@ -15,7 +15,7 @@ public class LevelOne extends GameLevel {
 	protected void initStatics() {
 		System.out.println("Level 1. Init statics...");
 		this.board = new VerticalDefaultBoard();
-		factory.physicsFactory.createWorldLimits(board.boardWidth, board.boardHeight);
+		factory.physicsFactory.createWorldLimits(board.getBoardWidth(), board.getBoardHeight());
 	}
 	
 	@Override

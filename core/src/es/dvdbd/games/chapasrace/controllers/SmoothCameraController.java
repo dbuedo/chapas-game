@@ -13,7 +13,7 @@ import es.dvdbd.games.chapasrace.engine.GameWorld;
 import es.dvdbd.games.chapasrace.tweens.CameraPositionAccessor;
 
 public class SmoothCameraController {
-	
+		
 	private TweenManager tweenManager;
 
 	private OrthographicCamera camera;
@@ -38,6 +38,7 @@ public class SmoothCameraController {
 	
 	private void animatedMoveTo(int targetX, int targetY, float duration, TweenEquation tween) {
 		// kill current tween - or pre-existing 
+		
 		tweenManager.killTarget(camera);
 		// move
 		Tween.to(camera, CameraPositionAccessor.POS_XY, duration)

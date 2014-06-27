@@ -19,10 +19,12 @@ public class AssetsLoader {
     public static Texture targetRojoTexture, targetAzulTexture, targetGrisTexture;
     public static Texture circuitoTexture, fondoPruebasTexture, verticalTexture, horizontalTexture;
     public static Texture obstacleTexture;
+    public static Texture seleccionTexture;
     public static TextureRegion chapa, chapaNaranja, chapaAmarilla, chapaRoja, chapaAzul;
     public static TextureRegion targetRojo, targetAzul, targetGris;
     public static TextureRegion circuito, fondoPruebas, vertical, horizontal; 
     public static TextureRegion obstacle;
+    public static TextureRegion seleccion;
     public static Preferences prefs;
     
     public static void load() {
@@ -66,6 +68,11 @@ public class AssetsLoader {
         obstacleTexture = new Texture(Gdx.files.internal("textures/obstacle.png"));
         obstacleTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         obstacle =  new TextureRegion(obstacleTexture);
+        
+        // Seleccion
+        seleccionTexture = new Texture(Gdx.files.internal("textures/seleccion2.png"));
+        seleccionTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        seleccion =  new TextureRegion(seleccionTexture);
         
         // Fondos
         circuitoTexture = new Texture(Gdx.files.internal("textures/circuito.jpg"));

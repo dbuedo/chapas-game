@@ -9,11 +9,14 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 import es.dvdbd.games.chapasrace.engine.GameWorld;
-import es.dvdbd.games.chapasrace.engine.GameWorld.GameStatus;
 import es.dvdbd.games.chapasrace.gameobjects.Cap;
+
+import static es.dvdbd.games.chapasrace.util.GameConstants.*;
 
 public class DraggedMoveStrategy implements TouchMoveStrategy {
 	
+
+
 	private GameWorld gameWorld;
 
 	Vector3 testPoint = new Vector3();
@@ -63,7 +66,7 @@ public class DraggedMoveStrategy implements TouchMoveStrategy {
 					def.bodyB = hitBody;
 					def.collideConnected = true;
 					def.target.set(testPoint.x, testPoint.y);
-					def.maxForce = 1000.0f * hitBody.getMass();
+					def.maxForce = CAP_DRAGGED_FORCE * hitBody.getMass();
 					mouseJoint = (MouseJoint) gameWorld.physics.createJoint(def);
 					hitBody.setAwake(true); 
 				}

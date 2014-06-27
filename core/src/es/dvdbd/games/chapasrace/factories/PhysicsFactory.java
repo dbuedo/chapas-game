@@ -10,8 +10,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-import es.dvdbd.games.chapasrace.util.Collisions;
-import es.dvdbd.games.chapasrace.util.GameConstants;
+
+import static es.dvdbd.games.chapasrace.util.GameConstants.*;
 
 public class PhysicsFactory {
 
@@ -51,7 +51,7 @@ public class PhysicsFactory {
 	public Body createCap(float positionX, float positionY) {
 		Body cap;
 		CircleShape circleShape = new CircleShape();
-		circleShape.setRadius(GameConstants.CAP_RADIUS);
+		circleShape.setRadius(CAP_RADIUS);
 
 		BodyDef circleBodyDef = new BodyDef();
 		circleBodyDef.type = BodyType.DynamicBody;
@@ -62,8 +62,8 @@ public class PhysicsFactory {
 		
 		FixtureDef fd = new FixtureDef();
 		fd.shape = circleShape;
-		fd.density = 1.0f;
-		fd.restitution = 0.1f;
+		fd.density = CAP_BODY_DENSITY;
+		fd.restitution = CAP_BODY_RESTITUTION;
 
 		cap.createFixture(fd);
 		cap.setFixedRotation(false);
@@ -83,11 +83,11 @@ public class PhysicsFactory {
 		target = physics.createBody(circleBodyDef);
 		
 		CircleShape circleShape = new CircleShape();		
-		circleShape.setRadius(GameConstants.TARGET_SENSOR_RADIUS);
+		circleShape.setRadius(TARGET_SENSOR_RADIUS);
 		
 		FixtureDef fd = new FixtureDef();
 		fd.shape = circleShape;
-		fd.density = 0.0f;
+		fd.density = TARGET_BODY_DENSITY;
 	//	fd.isSensor = true;
 		
 		target.createFixture(fd);

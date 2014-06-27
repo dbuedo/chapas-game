@@ -19,7 +19,8 @@ public class Obstacle extends GameObject {
 		
 		sprite = new Sprite(AssetsLoader.obstacle);
 		sprite.setSize(width, height);
-		
+		sprite.setPosition(physicalBody.getPosition().x, physicalBody.getPosition().y);
+		sprite.translate(-width/2, -height/2);	
 	}
 
 	@Override
@@ -29,7 +30,6 @@ public class Obstacle extends GameObject {
 
 	@Override
 	public void render(SpriteBatch batch, float delta, float runTime) {
-		sprite.translate(-width/2, -height/2);
 		sprite.draw(batch);
 	}
 

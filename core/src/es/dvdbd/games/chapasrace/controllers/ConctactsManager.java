@@ -1,10 +1,11 @@
 package es.dvdbd.games.chapasrace.controllers;
 
+import static es.dvdbd.games.chapasrace.util.GameConstants.*;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import es.dvdbd.games.chapasrace.engine.GameWorld;
@@ -12,7 +13,6 @@ import es.dvdbd.games.chapasrace.gameobjects.Cap;
 import es.dvdbd.games.chapasrace.gameobjects.GameObject;
 import es.dvdbd.games.chapasrace.gameobjects.GameZone;
 import es.dvdbd.games.chapasrace.gameobjects.Target;
-import es.dvdbd.games.chapasrace.util.GameConstants;
 
 public class ConctactsManager implements ContactListener {
 	
@@ -57,7 +57,7 @@ public class ConctactsManager implements ContactListener {
 					
 		//boolean inside = targetCenter.epsilonEquals(capCenter, GameConstants.TARGET_SENSOR_RADIUS*2 * 0.2f);
 				
-		boolean inside = targetCenter.dst(capCenter) <= (Math.abs(GameConstants.TARGET_SENSOR_RADIUS - GameConstants.CAP_RADIUS));
+		boolean inside = targetCenter.dst(capCenter) <= (Math.abs(TARGET_SENSOR_RADIUS - CAP_RADIUS));
 		
 		if(inside) {
 			setWinnerCap(cap);

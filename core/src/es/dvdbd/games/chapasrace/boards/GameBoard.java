@@ -4,12 +4,32 @@ import com.badlogic.gdx.graphics.Texture;
 
 public abstract class GameBoard {
 
-	public float boardWidth;
-	public float boardHeight;
-	public Texture texture;
+	protected float boardWidth;
+	protected float boardHeight;
+	protected Texture texture;	
 	
-	public boolean tiled = false;
-	public float tileWidth;
-	public float tileHeight;
+	protected boolean tiled = false;
+	protected float tileWidth;
+	protected float tileHeight;
+	
+	public float getBoardWidth() {
+		return boardWidth;
+	}
+	public float getBoardHeight() {
+		return boardHeight;
+	}
+	public Texture getTexture() {
+		return texture;
+	}
+	public boolean isTiled() {
+		return tiled;
+	}
+	public float getTileWidth() {
+		return tileWidth;
+	}
+	public float getTileHeight() {
+		return tileHeight;
+	}
+
 	
 }

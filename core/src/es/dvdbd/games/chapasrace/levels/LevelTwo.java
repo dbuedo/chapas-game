@@ -17,7 +17,7 @@ public class LevelTwo extends GameLevel {
 	protected void initStatics() {
 		System.out.println("Level 2. Init statics...");
 		this.board = new HorizontalDefaultBoard();
-		factory.physicsFactory.createWorldLimits(board.boardWidth, board.boardHeight);
+		factory.physicsFactory.createWorldLimits(board.getBoardWidth(), board.getBoardHeight());
 	}
 	
 	@Override
